@@ -4,9 +4,7 @@ date
 echo $inputFileDisk
 echo $outputFolder
 
-unzip ./$inputFileDisk ./$outputFolder
+tar -xvf /$inputFileDisk -C /$outputFolder
 
 # Log ending time
 date 
-done
-

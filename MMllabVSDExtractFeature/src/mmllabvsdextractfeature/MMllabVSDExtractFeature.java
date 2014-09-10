@@ -30,10 +30,22 @@ public class MMllabVSDExtractFeature {
     public static void main(String[] args) throws IOException {
         // TODO code application logic here
         MMllabVSDExtractFeature hello = new MMllabVSDExtractFeature();
-        ArrayList<FileStructer> test=  hello.readMetadata ("C://test.lst");
-            
+       // ArrayList<FileStructer> test=  hello.readMetadata ("C://test.lst");
+        ArrayList<String> paraUnzip = new ArrayList<>();
+        paraUnzip.add("/home/tiendv/Downloads/tiendv.tar");
+        paraUnzip.add("/home/tiendv"); 
+        //hello.execSH("/home/tiendv/NetBeansProjects/trunk/MMllabVSDExtractFeature/src/mmllabvsdextractfeature/unzip.sh",paraUnzip);
+        ProcessBuilder pb = new ProcessBuilder("/home/tiendv/NetBeansProjects/trunk/MMllabVSDExtractFeature/src/mmllabvsdextractfeature/unzip.sh","/home/tiendv/Downloads/tiendv.tar","/home/tiendv");
+        Process p = pb.start();   
+        BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
+        String line = null;
+        while ((line = reader.readLine()) != null)
+        {
+           System.out.println(line);
+        }
     }
-    void unZipFolder (String filenname){
+    void unZipFolder (String filenname, String outputDir){
+        
     }
    
     
@@ -86,12 +98,12 @@ public class MMllabVSDExtractFeature {
      * @param listparam : list parameter
      * @throws IOException 
      */
-     public void execSH(String scriptName, ArrayList<String> listparam) throws IOException {
+     void execSH(String scriptName, ArrayList<String> listparam) throws IOException {
         String fullScript = scriptName + " ";
         for(int i=0; i<listparam.size();i++){
-            fullScript= " " + listparam.get(i);
+            fullScript+= " " + listparam.get(i);
         }
-        ProcessBuilder pb = new ProcessBuilder(scriptName,"test");
+        ProcessBuilder pb = new ProcessBuilder(fullScript);
         Process p = pb.start();
         BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
         String line = null;
@@ -100,5 +112,5 @@ public class MMllabVSDExtractFeature {
            System.out.println(line);
         }
      }
-    
+
 }
