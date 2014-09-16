@@ -27,7 +27,7 @@ import org.imgscalr.Scalr.Mode;
  */
 public class MMllabVSDExtractFeature {
     
-    static String UNTARSHFILE ="home/mmlab/NetBeansProjects/trunk/MMllabVSDExtractFeature/src/mmllabvsdextractfeature/untarfolder.sh";
+    static String UNTARSHFILE ="/home/mmlab/NetBeansProjects/trunk/MMllabVSDExtractFeature/src/mmllabvsdextractfeature/untarfolder.sh";
     
 
     /**
@@ -38,6 +38,7 @@ public class MMllabVSDExtractFeature {
         MMllabVSDExtractFeature hello = new MMllabVSDExtractFeature();
         FileStructer metdata = new FileStructer();
         Utility utilityClass = new Utility();
+        FrameStructer frameStructer = new FrameStructer();
 
         /*
             Flow :
@@ -57,21 +58,31 @@ public class MMllabVSDExtractFeature {
         */
         
         // Load metadata File
-        String dir="";
-        String metadataFileDir = "";
+        String dir="/media/data1";
+        String metadataFileDir = "/media/data1/metdata/devel2011-new.lst";
         ArrayList<FileStructer> listFileFromMetadata = metdata.readMetadata(metadataFileDir);
         
         // process with all Folder in metdata file
         
         for (int i =0; i< listFileFromMetadata.size();i++){
-            //Load with 1 zip file
-            String nameZipFile = dir+"/"+listFileFromMetadata.get(i).getNameZipFileName()+".tar";
-            String folderName = listFileFromMetadata.get(i).getNameZipFileName();  
-            // Unzip tarFolder
-            utilityClass.unTarFolder(UNTARSHFILE, nameZipFile, dir);
+           
+            //Un zip file
+            String folderName = listFileFromMetadata.get(i).getWholeFolderName();  
+            String nameZipFile = dir+"/"+folderName+"/"+listFileFromMetadata.get(i).getNameZipFileName()+".tar";
+            nameZipFile = nameZipFile.replaceAll("\\s","");
+            String outPutFolder = dir+"/"+folderName+"/"+listFileFromMetadata.get(i).getNameZipFileName();
+            outPutFolder = outPutFolder.replaceAll("\\s","");
+            utilityClass.unTarFolder(UNTARSHFILE, nameZipFile,outPutFolder);
+            
+            // Read all file from Folder has been unzip
+            
+            ArrayList <FrameStructer> allFrameInZipFolder = new ArrayList<>();
+            allFrameInZipFolder = frameStructer.getListFileInZipFolder(outPutFolder);
+            
+            // Extract feature 1 shot 
             
         }
-        
+          
     }
     
     Void resizeImage (String imageName, String saveDir, int targetWidth, int targetHeight ) throws IOException{
