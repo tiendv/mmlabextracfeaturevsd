@@ -6,6 +6,9 @@
 
 package mmllabvsdextractfeature;
 
+import java.io.File;
+import java.util.ArrayList;
+
 /**
  *
  * @author tiendv
@@ -21,7 +24,22 @@ package mmllabvsdextractfeature;
      */
 
 public class FrameStructer {
+    Utility utility = new Utility();
     String folder;
     String shotID;
     String frameID;
+    
+    public ArrayList<FrameStructer> getListFileInZipFolder (String pathZipFolder) {
+        ArrayList<FrameStructer> result = new ArrayList<>();
+        File[] listAllFileInFolder = utility.listAllFileInFolder(pathZipFolder);
+        for (int i=0; i<listAllFileInFolder.length; i++){
+            FrameStructer temp = new FrameStructer();
+            String[] parts =  utility.SplitUsingTokenizer(listAllFileInFolder[i].getName(), ".");
+            temp.folder = parts[0];
+            temp.shotID = parts[1];
+            temp.frameID = parts[1]; 
+        }
+        return result;
+        
+    }
 }

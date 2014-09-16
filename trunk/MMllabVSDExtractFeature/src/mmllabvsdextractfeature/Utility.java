@@ -7,6 +7,7 @@
 package mmllabvsdextractfeature;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -48,6 +49,23 @@ public class Utility {
            }
              return result;
 
+       }
+    /**
+     * 
+     * @param pathFolder
+     * @return list file in Folder
+     */
+       File[] listAllFileInFolder (String pathFolder) {
+           File folder = new File(pathFolder);
+           File[] listOfFiles = folder.listFiles();
+                for (int i = 0; i < listOfFiles.length; i++) {
+                  if (listOfFiles[i].isFile()) {
+                    System.out.println("File " + listOfFiles[i].getName());
+                  } else if (listOfFiles[i].isDirectory()) {
+                    System.out.println("Directory " + listOfFiles[i].getName());
+                  }
+                }
+        return listOfFiles;
        }
     
 }
