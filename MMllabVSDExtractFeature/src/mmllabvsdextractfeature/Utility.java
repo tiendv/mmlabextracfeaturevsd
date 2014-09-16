@@ -116,13 +116,45 @@ public class Utility {
        void resizeWholeFolder (String pathFolderResize, String pathFolderSave, int targetWidth, int targetHeight) throws IOException{
          File[] listAllFileInFolder = this.listAllFileInFolder(pathFolderResize);
          for(int i=0; i<listAllFileInFolder.length; i++) {
-            String pathImage = pathFolderResize+listAllFileInFolder[i].getName()+"jpg";
-            BufferedImage img = ImageIO.read(new File(pathImage));
+            
+            BufferedImage img = ImageIO.read(new File(listAllFileInFolder[i].getAbsolutePath()));
             BufferedImage scaledImg = Scalr.resize(img, Scalr.Mode.AUTOMATIC, targetWidth, targetHeight);
-            File destFile = new File(pathFolderSave+listAllFileInFolder[i].getName()+".jpg");
+            File destFile = new File(pathFolderSave+"/"+listAllFileInFolder[i].getName()+".jpg");
             ImageIO.write(scaledImg, "jpg", destFile);
          }
           System.out.println("Done resizing");
+       }
+       /**
+        * 
+        * @param pathScriptShCreateFolder
+        * @param folderPathCreate
+        * @throws IOException 
+        */
+       void createFolder(String pathScriptShCreateFolder, String folderPathCreate) throws IOException{
+           ProcessBuilder pb = new ProcessBuilder(pathScriptShCreateFolder,folderPathCreate);
+           Process process = pb.start();   
+           BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+           String line = null;
+           while ((line = reader.readLine()) != null)
+           {
+              System.out.println(line);
+           }
+       }
+       /**
+        * 
+        * @param pathScriptShDeleteFolder
+        * @param folderPathCreate
+        * @throws IOException 
+        */
+        void deleteWholeFolder(String pathScriptShDeleteFolder, String folderPathCreate) throws IOException{
+           ProcessBuilder pb = new ProcessBuilder(pathScriptShDeleteFolder,folderPathCreate);
+           Process process = pb.start();   
+           BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+           String line = null;
+           while ((line = reader.readLine()) != null)
+           {
+              System.out.println(line);
+           }
        }
     
 }

@@ -28,6 +28,8 @@ import org.imgscalr.Scalr.Mode;
 public class MMllabVSDExtractFeature {
     
     static String UNTARSHFILE ="/home/mmlab/NetBeansProjects/trunk/MMllabVSDExtractFeature/src/mmllabvsdextractfeature/untarfolder.sh";
+    static String CREADFOLDER ="/home/mmlab/NetBeansProjects/trunk/MMllabVSDExtractFeature/src/mmllabvsdextractfeature/createfolder.sh";
+    static String DELETEFOLDER ="/home/mmlab/NetBeansProjects/trunk/MMllabVSDExtractFeature/src/mmllabvsdextractfeature/deletewholefolder.sh";
     static int resizeWidth = 800;
     static int resizeHeight = 600;
     
@@ -76,7 +78,9 @@ public class MMllabVSDExtractFeature {
             utilityClass.unTarFolder(UNTARSHFILE, nameZipFile,outPutFolder+"_");
             
             // Resize all image in folder has been unzip
+            utilityClass.createFolder(CREADFOLDER, outPutFolder);
             utilityClass.resizeWholeFolder(outPutFolder+"_", outPutFolder, resizeWidth, resizeHeight);
+            utilityClass.deleteWholeFolder(DELETEFOLDER, outPutFolder+"_");
             // Read all file from Folder has been unzip
             
             ArrayList <FrameStructer> allFrameInZipFolder = new ArrayList<>();
