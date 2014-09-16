@@ -28,8 +28,9 @@ import org.imgscalr.Scalr.Mode;
 public class MMllabVSDExtractFeature {
     
     static String UNTARSHFILE ="/home/mmlab/NetBeansProjects/trunk/MMllabVSDExtractFeature/src/mmllabvsdextractfeature/untarfolder.sh";
+    static int resizeWidth = 800;
+    static int resizeHeight = 600;
     
-
     /**
      * @param args the command line arguments
      */
@@ -72,27 +73,25 @@ public class MMllabVSDExtractFeature {
             nameZipFile = nameZipFile.replaceAll("\\s","");
             String outPutFolder = dir+"/"+folderName+"/"+listFileFromMetadata.get(i).getNameZipFileName();
             outPutFolder = outPutFolder.replaceAll("\\s","");
-            utilityClass.unTarFolder(UNTARSHFILE, nameZipFile,outPutFolder);
+            utilityClass.unTarFolder(UNTARSHFILE, nameZipFile,outPutFolder+"_");
             
+            // Resize all image in folder has been unzip
+            utilityClass.resizeWholeFolder(outPutFolder+"_", outPutFolder, resizeWidth, resizeHeight);
             // Read all file from Folder has been unzip
             
             ArrayList <FrameStructer> allFrameInZipFolder = new ArrayList<>();
             allFrameInZipFolder = frameStructer.getListFileInZipFolder(outPutFolder);
             
-            // Extract feature 1 shot 
+            /**
+             * Extract 1 shot
+             * Resize 25 frame with the same shotid --> delete orgra.
+             * Extract 25 frame --> feature file --->delete 
+             * 
+             */
+             
             
         }
           
-    }
-    
-    Void resizeImage (String imageName, String saveDir, int targetWidth, int targetHeight ) throws IOException{
-        
-        BufferedImage img = ImageIO.read(new File(imageName));
-        BufferedImage scaledImg = Scalr.resize(img, Mode.AUTOMATIC, targetWidth, targetHeight);
-        File destFile = new File(saveDir+imageName+".jpg");
-        ImageIO.write(scaledImg, "jpg", destFile);
-        System.out.println("Done resizing");
-        return null;
     }
    
     /**
