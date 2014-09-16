@@ -6,7 +6,9 @@
 
 package mmllabvsdextractfeature;
 
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -14,7 +16,10 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.StringTokenizer;
+import javax.imageio.ImageIO;
 import org.apache.commons.io.IOUtils;
+import org.imgscalr.Scalr;
+import org.imgscalr.Scalr.Mode;
 
 /**
  *
@@ -22,7 +27,8 @@ import org.apache.commons.io.IOUtils;
  */
 public class MMllabVSDExtractFeature {
     
-    Utility utility = new Utility();
+    static String UNTARSHFILE ="home/mmlab/NetBeansProjects/trunk/MMllabVSDExtractFeature/src/mmllabvsdextractfeature/untarfolder.sh";
+    
 
     /**
      * @param args the command line arguments
@@ -30,41 +36,54 @@ public class MMllabVSDExtractFeature {
     public static void main(String[] args) throws IOException {
         // TODO code application logic here
         MMllabVSDExtractFeature hello = new MMllabVSDExtractFeature();
-       // ArrayList<FileStructer> test=  hello.readMetadata ("C://test.lst");
-        ArrayList<String> paraUnzip = new ArrayList<>();
-        String [] parrameter = new String[3];
-        Boolean test = hello.zipFolder("/home/tiendv/NetBeansProjects/trunk/MMllabVSDExtractFeature/src/mmllabvsdextractfeature/zipfolder.sh","/home/tiendv/Downloads/Examples","/home/");
-//        ProcessBuilder pb = new ProcessBuilder("/home/tiendv/NetBeansProjects/trunk/MMllabVSDExtractFeature/src/mmllabvsdextractfeature/unzip.sh","/home/tiendv/Downloads/tiendv.tar","/home/tiendv");
-//        Process p = pb.start();   
-//        BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
-//        String line = null;
-//        while ((line = reader.readLine()) != null)
-//        {
-//           System.out.println(line);
-//        }
-    }
-    /**
-     * 
-     * @param unTarScriptShFile
-     * @param folderForUnTar
-     * @param dirtoSave
-     * @return
-     * @throws IOException 
-     */
-    Boolean unTarFolder (String unTarScriptShFile, String folderForUnTar, String dirtoSave) throws IOException{
-           //ProcessBuilder pb = new ProcessBuilder("/home/tiendv/NetBeansProjects/trunk/MMllabVSDExtractFeature/src/mmllabvsdextractfeature/unzip.sh","/home/tiendv/Downloads/tiendv.tar","/home/tiendv");
-           Boolean result =false;
-           ProcessBuilder pb = new ProcessBuilder(unTarScriptShFile,folderForUnTar,dirtoSave);
-           Process process = pb.start();   
-           BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-           String line = null;
-           while ((line = reader.readLine()) != null)
-           {
-              System.out.println(line);
-           }
-             return result;
+        FileStructer metdata = new FileStructer();
+        Utility utilityClass = new Utility();
 
-       }
+        /*
+            Flow :
+        
+        1. Read  metdata file
+        2. Untar folder:
+                -1 Shot content 25 frame
+                -1 folder 50 shot
+        Process with 1 shot:
+                - Resize All image 1 shot --> delete orginal.
+                - Extract feature 25 frame
+                - Pooling Max and aveg.
+                - Delete Image, feature
+                - zip file Feature 
+        3. Delete File.
+                
+        */
+        
+        // Load metadata File
+        String dir="";
+        String metadataFileDir = "";
+        ArrayList<FileStructer> listFileFromMetadata = metdata.readMetadata(metadataFileDir);
+        
+        // process with all Folder in metdata file
+        
+        for (int i =0; i< listFileFromMetadata.size();i++){
+            //Load with 1 zip file
+            String nameZipFile = dir+"/"+listFileFromMetadata.get(i).getNameZipFileName()+".tar";
+            String folderName = listFileFromMetadata.get(i).getNameZipFileName();  
+            // Unzip tarFolder
+            utilityClass.unTarFolder(UNTARSHFILE, nameZipFile, dir);
+            
+        }
+        
+    }
+    
+    Void resizeImage (String imageName, String saveDir, int targetWidth, int targetHeight ) throws IOException{
+        
+        BufferedImage img = ImageIO.read(new File(imageName));
+        BufferedImage scaledImg = Scalr.resize(img, Mode.AUTOMATIC, targetWidth, targetHeight);
+        File destFile = new File(saveDir+imageName+".jpg");
+        ImageIO.write(scaledImg, "jpg", destFile);
+        System.out.println("Done resizing");
+        return null;
+    }
+   
     /**
      * 
      * @param tarScriptShFile
@@ -88,34 +107,6 @@ public class MMllabVSDExtractFeature {
 
        }
     
-    /**
-     * 
-     * @param metadataFile: duong dan den 1 file metadata
-     * @return : tra ve doi tuong chua ten folder va 
-     * @throws FileNotFoundException
-     * @throws IOException 
-     */
-    public ArrayList<FileStructer> readMetadata (String metadataFile) throws FileNotFoundException, IOException {
-            ArrayList<FileStructer> result = new ArrayList<>();
-                try (FileInputStream inputStream = new FileInputStream(metadataFile)) {
-                Scanner scanner = new Scanner(inputStream);
-                ArrayList<String> line = new ArrayList<>();
-                while(scanner.hasNextLine()){
-                 line.add(scanner.nextLine());
-               // System.out.println(scanner.nextLine());
-                }
-                for(int i=0; i<line.size(); i++){
-                    FileStructer temp = new FileStructer();
-                    String[] parts =  utility.SplitUsingTokenizer(line.get(i), "#$#");
-                    temp.filmNameFrame = parts[0];
-                    temp.folderName = parts[2];
-                    result.add(temp);
-                }
-           }
-           System.out.println(result.size());
-        return result;
-    }
-    
     public void execPHP(String scriptName, String param) throws IOException {
         
       String line;
@@ -131,6 +122,4 @@ public class MMllabVSDExtractFeature {
 
         return arrLis.toArray(new String[0]);
     }
-
-
 }

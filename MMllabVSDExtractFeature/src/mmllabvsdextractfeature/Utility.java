@@ -6,6 +6,9 @@
 
 package mmllabvsdextractfeature;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
@@ -24,5 +27,27 @@ public class Utility {
 
     return arrLis.toArray(new String[0]);
  }
+     /**
+     * 
+     * @param unTarScriptShFile
+     * @param folderForUnTar
+     * @param dirtoSave
+     * @return
+     * @throws IOException 
+     */
+    Boolean unTarFolder (String unTarScriptShFile, String folderForUnTar, String dirtoSave) throws IOException{
+           //ProcessBuilder pb = new ProcessBuilder("/home/tiendv/NetBeansProjects/trunk/MMllabVSDExtractFeature/src/mmllabvsdextractfeature/unzip.sh","/home/tiendv/Downloads/tiendv.tar","/home/tiendv");
+           Boolean result =false;
+           ProcessBuilder pb = new ProcessBuilder(unTarScriptShFile,folderForUnTar,dirtoSave);
+           Process process = pb.start();   
+           BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+           String line = null;
+           while ((line = reader.readLine()) != null)
+           {
+              System.out.println(line);
+           }
+             return result;
+
+       }
     
 }
