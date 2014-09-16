@@ -32,22 +32,61 @@ public class MMllabVSDExtractFeature {
         MMllabVSDExtractFeature hello = new MMllabVSDExtractFeature();
        // ArrayList<FileStructer> test=  hello.readMetadata ("C://test.lst");
         ArrayList<String> paraUnzip = new ArrayList<>();
-        paraUnzip.add("/home/tiendv/Downloads/tiendv.tar");
-        paraUnzip.add("/home/tiendv"); 
-        //hello.execSH("/home/tiendv/NetBeansProjects/trunk/MMllabVSDExtractFeature/src/mmllabvsdextractfeature/unzip.sh",paraUnzip);
-        ProcessBuilder pb = new ProcessBuilder("/home/tiendv/NetBeansProjects/trunk/MMllabVSDExtractFeature/src/mmllabvsdextractfeature/unzip.sh","/home/tiendv/Downloads/tiendv.tar","/home/tiendv");
-        Process p = pb.start();   
-        BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
-        String line = null;
-        while ((line = reader.readLine()) != null)
-        {
-           System.out.println(line);
-        }
+        String [] parrameter = new String[3];
+        Boolean test = hello.zipFolder("/home/tiendv/NetBeansProjects/trunk/MMllabVSDExtractFeature/src/mmllabvsdextractfeature/zipfolder.sh","/home/tiendv/Downloads/Examples","/home/");
+//        ProcessBuilder pb = new ProcessBuilder("/home/tiendv/NetBeansProjects/trunk/MMllabVSDExtractFeature/src/mmllabvsdextractfeature/unzip.sh","/home/tiendv/Downloads/tiendv.tar","/home/tiendv");
+//        Process p = pb.start();   
+//        BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
+//        String line = null;
+//        while ((line = reader.readLine()) != null)
+//        {
+//           System.out.println(line);
+//        }
     }
-    void unZipFolder (String filenname, String outputDir){
-        
-    }
-   
+    /**
+     * 
+     * @param unTarScriptShFile
+     * @param folderForUnTar
+     * @param dirtoSave
+     * @return
+     * @throws IOException 
+     */
+    Boolean unTarFolder (String unTarScriptShFile, String folderForUnTar, String dirtoSave) throws IOException{
+           //ProcessBuilder pb = new ProcessBuilder("/home/tiendv/NetBeansProjects/trunk/MMllabVSDExtractFeature/src/mmllabvsdextractfeature/unzip.sh","/home/tiendv/Downloads/tiendv.tar","/home/tiendv");
+           Boolean result =false;
+           ProcessBuilder pb = new ProcessBuilder(unTarScriptShFile,folderForUnTar,dirtoSave);
+           Process process = pb.start();   
+           BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+           String line = null;
+           while ((line = reader.readLine()) != null)
+           {
+              System.out.println(line);
+           }
+             return result;
+
+       }
+    /**
+     * 
+     * @param tarScriptShFile
+     * @param folderForTar
+     * @param dirtoSave
+     * @return
+     * @throws IOException 
+     */
+       Boolean zipFolder (String tarScriptShFile, String folderForZip, String dirtoSave) throws IOException{
+           //ProcessBuilder pb = new ProcessBuilder("/home/tiendv/NetBeansProjects/trunk/MMllabVSDExtractFeature/src/mmllabvsdextractfeature/unzip.sh","/home/tiendv/Downloads/tiendv.tar","/home/tiendv");
+           Boolean result =false;
+           ProcessBuilder pb = new ProcessBuilder(tarScriptShFile,folderForZip,dirtoSave);
+           Process process = pb.start();   
+           BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+           String line = null;
+           while ((line = reader.readLine()) != null)
+           {
+              System.out.println(line);
+           }
+             return result;
+
+       }
     
     /**
      * 
@@ -92,25 +131,6 @@ public class MMllabVSDExtractFeature {
 
         return arrLis.toArray(new String[0]);
     }
-    /**
-     *  excute script file in Linux from script source and parameter
-     * @param scriptName: source Script
-     * @param listparam : list parameter
-     * @throws IOException 
-     */
-     void execSH(String scriptName, ArrayList<String> listparam) throws IOException {
-        String fullScript = scriptName + " ";
-        for(int i=0; i<listparam.size();i++){
-            fullScript+= " " + listparam.get(i);
-        }
-        ProcessBuilder pb = new ProcessBuilder(fullScript);
-        Process p = pb.start();
-        BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
-        String line = null;
-        while ((line = reader.readLine()) != null)
-        {
-           System.out.println(line);
-        }
-     }
+
 
 }
