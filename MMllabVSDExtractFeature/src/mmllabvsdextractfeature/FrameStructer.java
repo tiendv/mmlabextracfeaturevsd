@@ -19,6 +19,7 @@ import java.util.ArrayList;
      * VSD_devel2011_1_001: zipFileName
      * devel2011-new: wholeFolderName content all zipFile
      * VSD_devel2011_1: folder
+     * RKF_1: film ID
      * shot_1: shot and id shot
      * Frame_1: frame and id frame
      */
@@ -28,6 +29,7 @@ public class FrameStructer {
     String folder;
     String shotID;
     String frameID;
+    String filmID;
     
     public ArrayList<FrameStructer> getListFileInZipFolder (String pathZipFolder) {
         ArrayList<FrameStructer> result = new ArrayList<>();
@@ -37,7 +39,9 @@ public class FrameStructer {
             String[] parts =  utility.SplitUsingTokenizer(listAllFileInFolder[i].getName(), ".");
             temp.folder = parts[0];
             temp.shotID = parts[1];
-            temp.frameID = parts[1]; 
+            temp.filmID =  parts[2];
+            temp.frameID = parts[3];
+            result.add(temp);
         }
         return result;
         
