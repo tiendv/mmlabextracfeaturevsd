@@ -3,9 +3,8 @@
 date
 
 echo $1
-echo $2
-mkdir -p /$2
-tar -xvf /$1 -C /$2
+
+rm -r -f /$1
 
 # Log ending time
 date 
