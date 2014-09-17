@@ -14,6 +14,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 import javax.imageio.ImageIO;
@@ -87,15 +88,18 @@ public class MMllabVSDExtractFeature {
             allFrameInZipFolder = frameStructer.getListFileInZipFolder(outPutFolder);
             System.out.println(allFrameInZipFolder.size());
             // Loop with 1 shot
+            // sort with shot ID
+            
+            Collections.sort(allFrameInZipFolder,FrameStructer.frameIDNo);
+            
             int indexFrame=0;
-            for(int n=0;n<allFrameInZipFolder.size()/25;n++)
+            for(int n=0;n<allFrameInZipFolder.size()/5;n++)
             {
                 // Process with 1 shot
                 for(;indexFrame<(n+1)*25;indexFrame++){
-                    System.out.print(allFrameInZipFolder.get(indexFrame).shotID);
+                    System.out.print(allFrameInZipFolder.get(indexFrame).shotID+"\n");
                 }
-                System.out.print("The end of one's shot");
-
+                System.out.print("The end of one's shot"+"\n"+n);
             }
             
             /**

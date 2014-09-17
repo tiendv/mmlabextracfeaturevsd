@@ -8,6 +8,7 @@ package mmllabvsdextractfeature;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 /**
  *
@@ -25,7 +26,7 @@ import java.util.ArrayList;
      */
 
 public class FrameStructer {
-    Utility utility = new Utility();
+    static Utility utility = new Utility();
     String folder;
     String shotID;
     String frameID;
@@ -43,7 +44,23 @@ public class FrameStructer {
             temp.frameID = parts[3];
             result.add(temp);
         }
-        return result;
-        
+        return result;  
     }
+
+    /*Comparator for sorting the list by id frame*/
+    public static Comparator<FrameStructer> frameIDNo = new Comparator<FrameStructer>() {
+
+	public int compare(FrameStructer s1, FrameStructer s2) {
+                
+	   int rollno1 = Integer.parseInt(utility.SplitUsingTokenizer(s1.shotID, "_")[1]);
+	   int rollno2 = Integer.parseInt(utility.SplitUsingTokenizer(s2.shotID, "_")[1]);
+
+	   /*For ascending order*/
+	   return rollno1-rollno2;
+	   /*For descending order*/
+	   //rollno2-rollno1;
+        }
+   
+    };
+    
 }
