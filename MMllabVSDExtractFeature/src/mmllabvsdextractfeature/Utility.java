@@ -121,7 +121,7 @@ public class Utility {
 
             BufferedImage img = ImageIO.read(new File(listAllFileInFolder[i].getAbsolutePath()));
             BufferedImage scaledImg = Scalr.resize(img, Scalr.Mode.AUTOMATIC, targetWidth, targetHeight);
-            File destFile = new File(pathFolderSave + "/" + listAllFileInFolder[i].getName() + ".jpg");
+            File destFile = new File(pathFolderSave + "/" + listAllFileInFolder[i].getName());
             ImageIO.write(scaledImg, "jpg", destFile);
         }
         System.out.println("Done resizing");
