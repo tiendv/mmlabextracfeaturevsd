@@ -85,6 +85,18 @@ public class MMllabVSDExtractFeature {
             
             ArrayList <FrameStructer> allFrameInZipFolder = new ArrayList<>();
             allFrameInZipFolder = frameStructer.getListFileInZipFolder(outPutFolder);
+            System.out.println(allFrameInZipFolder.size());
+            // Loop with 1 shot
+            int indexFrame=0;
+            for(int n=0;n<allFrameInZipFolder.size()/25;n++)
+            {
+                // Process with 1 shot
+                for(;indexFrame<(n+1)*25;indexFrame++){
+                    System.out.print(allFrameInZipFolder.get(indexFrame).shotID);
+                }
+                System.out.print("The end of one's shot");
+
+            }
             
             /**
              * Extract 1 shot
