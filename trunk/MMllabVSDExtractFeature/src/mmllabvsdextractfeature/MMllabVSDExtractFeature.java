@@ -101,7 +101,8 @@ public class MMllabVSDExtractFeature {
                 // Process with 1 shot
                 for(;indexFrame<(n+1)*25;indexFrame++){
                     utilityClass.excuteFeatureExtractionAnImage(EXTRACTFEATURESHFILE, "1", CUDAOVERFEATPATH, outPutFolder+"/"+allFrameInZipFolder.get(cout).toFullName(),outPutFolder+"/"+allFrameInZipFolder.get(cout).toFullName()+".txt");
-                    System.out.print(allFrameInZipFolder.get(indexFrame).shotID+"\n");
+                    System.out.print( outPutFolder+"/"+allFrameInZipFolder.get(cout).toFullName()+"\n");
+                    cout++;
                 }
                 System.out.print("The end of one's shot"+"\n"+n);
             }
