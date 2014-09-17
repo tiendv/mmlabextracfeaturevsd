@@ -31,6 +31,8 @@ public class MMllabVSDExtractFeature {
     static String UNTARSHFILE ="/home/mmlab/NetBeansProjects/trunk/MMllabVSDExtractFeature/src/mmllabvsdextractfeature/untarfolder.sh";
     static String CREADFOLDER ="/home/mmlab/NetBeansProjects/trunk/MMllabVSDExtractFeature/src/mmllabvsdextractfeature/createfolder.sh";
     static String DELETEFOLDER ="/home/mmlab/NetBeansProjects/trunk/MMllabVSDExtractFeature/src/mmllabvsdextractfeature/deletewholefolder.sh";
+    static String EXTRACTFEATURESHFILE ="/home/mmlab/NetBeansProjects/trunk/MMllabVSDExtractFeature/src/mmllabvsdextractfeature/extractfeature.sh";
+    static String CUDAOVERFEATPATH ="/home/mmlab/overfeat/bin/linux_64/cuda";
     static int resizeWidth = 800;
     static int resizeHeight = 600;
     
@@ -86,17 +88,19 @@ public class MMllabVSDExtractFeature {
             
             ArrayList <FrameStructer> allFrameInZipFolder = new ArrayList<>();
             allFrameInZipFolder = frameStructer.getListFileInZipFolder(outPutFolder);
-            System.out.println(allFrameInZipFolder.size());
-            // Loop with 1 shot
-            // sort with shot ID
+            System.out.println(allFrameInZipFolder.size());         
             
+            // sort with shot ID
             Collections.sort(allFrameInZipFolder,FrameStructer.frameIDNo);
             
+            // Loop with 1 shot
             int indexFrame=0;
             for(int n=0;n<allFrameInZipFolder.size()/5;n++)
             {
+                int cout=0;
                 // Process with 1 shot
                 for(;indexFrame<(n+1)*25;indexFrame++){
+                    utilityClass.excuteFeatureExtractionAnImage(EXTRACTFEATURESHFILE, "1", CUDAOVERFEATPATH, outPutFolder+"/"+allFrameInZipFolder.get(cout).toFullName(),outPutFolder+"/"+allFrameInZipFolder.get(cout).toFullName()+".txt");
                     System.out.print(allFrameInZipFolder.get(indexFrame).shotID+"\n");
                 }
                 System.out.print("The end of one's shot"+"\n"+n);
