@@ -186,8 +186,8 @@ public class Utility {
      * @throws IOException
      */
 
-    void extractFeatureAnImage(String scriptSHExtractFeature, int gpuID, String cudaPath, String imageName, String placeToSaveImage) throws IOException {
-        ProcessBuilder pb = new ProcessBuilder(scriptSHExtractFeature, Integer.toString(gpuID), cudaPath, imageName, placeToSaveImage);
+    void extractFeatureAnImage(String scriptSHExtractFeature , String cudaPath, String imageName, String placeToSaveImage) throws IOException {
+        ProcessBuilder pb = new ProcessBuilder(scriptSHExtractFeature, cudaPath, imageName, placeToSaveImage);
         Process process = pb.start();
         BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
         String line = null;
