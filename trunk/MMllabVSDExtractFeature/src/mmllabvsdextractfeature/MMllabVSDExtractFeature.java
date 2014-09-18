@@ -31,8 +31,9 @@ public class MMllabVSDExtractFeature {
     static String UNTARSHFILE ="/home/mmlab/NetBeansProjects/trunk/MMllabVSDExtractFeature/src/mmllabvsdextractfeature/untarfolder.sh";
     static String CREADFOLDER ="/home/mmlab/NetBeansProjects/trunk/MMllabVSDExtractFeature/src/mmllabvsdextractfeature/createfolder.sh";
     static String DELETEFOLDER ="/home/mmlab/NetBeansProjects/trunk/MMllabVSDExtractFeature/src/mmllabvsdextractfeature/deletewholefolder.sh";
-    static String EXTRACTFEATURESHFILE ="/home/mmlab/NetBeansProjects/trunk/MMllabVSDExtractFeature/src/mmllabvsdextractfeature/extractfeature.sh";
+    static String EXTRACTFEATURESHFILE ="/home/mmlab/NetBeansProjects/trunk/MMllabVSDExtractFeature/src/mmllabvsdextractfeature/extracfeature.sh";
     static String CUDAOVERFEATPATH ="/home/mmlab/overfeat/bin/linux_64/cuda";
+    static String DELETEFILE = "/home/mmlab/NetBeansProjects/trunk/MMllabVSDExtractFeature/src/mmllabvsdextractfeature/deletewholefolder.sh";
     static int resizeWidth = 800;
     static int resizeHeight = 600;
     
@@ -100,10 +101,19 @@ public class MMllabVSDExtractFeature {
                 int cout=0;
                 // Process with 1 shot
                 for(;indexFrame<(n+1)*25;indexFrame++){
-                    utilityClass.excuteFeatureExtractionAnImage(EXTRACTFEATURESHFILE, "1", CUDAOVERFEATPATH, outPutFolder+"/"+allFrameInZipFolder.get(cout).toFullName(),outPutFolder+"/"+allFrameInZipFolder.get(cout).toFullName()+".txt");
+                    String imageForExtract = outPutFolder+"/"+allFrameInZipFolder.get(cout).toFullName()+".jpg";
+                    String resultNameAfterExtract = outPutFolder+"/"+allFrameInZipFolder.get(cout).toFullName()+".txt";
+                    utilityClass.excuteFeatureExtractionAnImage(EXTRACTFEATURESHFILE, "0", CUDAOVERFEATPATH,imageForExtract ,resultNameAfterExtract);
                     System.out.print( outPutFolder+"/"+allFrameInZipFolder.get(cout).toFullName()+"\n");
+                    
+                   // Delete image file
+                    utilityClass.deletefile(DELETEFILE, imageForExtract);
                     cout++;
                 }
+                
+                // Pooling 
+                
+                
                 System.out.print("The end of one's shot"+"\n"+n);
             }
             
