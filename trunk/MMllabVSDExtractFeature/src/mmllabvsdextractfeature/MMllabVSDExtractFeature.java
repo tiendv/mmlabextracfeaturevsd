@@ -32,6 +32,7 @@ public class MMllabVSDExtractFeature {
     static String CREADFOLDER ="/home/mmlab/NetBeansProjects/trunk/MMllabVSDExtractFeature/src/mmllabvsdextractfeature/createfolder.sh";
     static String DELETEFOLDER ="/home/mmlab/NetBeansProjects/trunk/MMllabVSDExtractFeature/src/mmllabvsdextractfeature/deletewholefolder.sh";
     static String EXTRACTFEATURESHFILE ="/home/mmlab/NetBeansProjects/trunk/MMllabVSDExtractFeature/src/mmllabvsdextractfeature/extracfeature.sh";
+    static String EXTRACTFEATUREANDDELETESOURCEIMAGESHFILE ="/home/mmlab/NetBeansProjects/trunk/MMllabVSDExtractFeature/src/mmllabvsdextractfeature/extracfeatureanddeletesoureimage.sh";
     static String CUDAOVERFEATPATH ="/home/mmlab/overfeat/bin/linux_64/cuda";
     static String DELETEFILE = "/home/mmlab/NetBeansProjects/trunk/MMllabVSDExtractFeature/src/mmllabvsdextractfeature/deletewholefolder.sh";
     static int resizeWidth = 800;
@@ -96,25 +97,21 @@ public class MMllabVSDExtractFeature {
             
             // Loop with 1 shot
             int indexFrame=0;
-            for(int n=0;n<allFrameInZipFolder.size()/5;n++)
+            for(int n=0;n<allFrameInZipFolder.size()/25;n++)
             {
-                int cout=0;
-                // Process with 1 shot
-                for(;indexFrame<(n+1)*25;indexFrame++){
-                    String imageForExtract = outPutFolder+"/"+allFrameInZipFolder.get(cout).toFullName()+".jpg";
-                    String resultNameAfterExtract = outPutFolder+"/"+allFrameInZipFolder.get(cout).toFullName()+".txt";
-                    utilityClass.excuteFeatureExtractionAnImage(EXTRACTFEATURESHFILE, "0", CUDAOVERFEATPATH,imageForExtract ,resultNameAfterExtract);
-                    System.out.print( outPutFolder+"/"+allFrameInZipFolder.get(cout).toFullName()+"\n");
+                // Process with 1 
+                    for(;indexFrame<Math.min((n+1)*25,allFrameInZipFolder.size());indexFrame++){
+                        String imageForExtract = outPutFolder+"/"+allFrameInZipFolder.get(indexFrame).toFullName()+".jpg";
+                        String resultNameAfterExtract = outPutFolder+"/"+allFrameInZipFolder.get(indexFrame).toFullName()+".txt";
+                        // extract and Delete image file --> ouput image'feature
+                        utilityClass.excuteFeatureExtractionAnImage(EXTRACTFEATUREANDDELETESOURCEIMAGESHFILE, "0", CUDAOVERFEATPATH,imageForExtract ,resultNameAfterExtract);
+                        System.out.print( outPutFolder+"/"+allFrameInZipFolder.get(indexFrame).toFullName()+"\n");
+                        indexFrame++;
+                    }
                     
-                   // Delete image file
-                    utilityClass.deletefile(DELETEFILE, imageForExtract);
-                    cout++;
-                }
+                    // Pooling 
+                    System.out.print("The end of one's shot"+"\n"+n);
                 
-                // Pooling 
-                
-                
-                System.out.print("The end of one's shot"+"\n"+n);
             }
             
             /**
