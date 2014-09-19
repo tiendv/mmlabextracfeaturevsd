@@ -19,5 +19,6 @@ cd $2
 ./overfeat_cuda -f $3>$4
 
 # delete file  result extract feature file;
+rm -r -f /$3
 # Log ending time
 date 
