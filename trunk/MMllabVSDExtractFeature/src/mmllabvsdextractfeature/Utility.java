@@ -5,6 +5,7 @@
  */
 package mmllabvsdextractfeature;
 
+import Jama.Matrix;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
@@ -197,6 +198,7 @@ public class Utility {
             System.out.println(line);
         }
     }
+    
     /**
      * 
      * @param filePath
@@ -205,7 +207,7 @@ public class Utility {
      * @throws IOException 
      */
     
-    public String readTextFile (String filePath) throws FileNotFoundException, IOException {
+    static String readTextFile (String filePath) throws FileNotFoundException, IOException {
         BufferedReader br = new BufferedReader(new FileReader(filePath));
         String result;
         while ((result = br.readLine()) != null) {
@@ -215,9 +217,25 @@ public class Utility {
         return result;
     }
     
-    public ArrayList<Float> featureVector (String fileFeaturePath){
-        ArrayList<Float> result  = new ArrayList();
+    public Matrix buidMatrixFeatureOneShot (ArrayList<String> nameAllFileFeatureOneShot) throws IOException{
         
-        return result;
+        if(!nameAllFileFeatureOneShot.isEmpty()){
+        int row = nameAllFileFeatureOneShot.size();
+        int colunm = SplitUsingTokenizer(readTextFile(nameAllFileFeatureOneShot.get(0))," ").length -3;
+        Matrix result = new Matrix(row,colunm);
+            for (int i=0;i<nameAllFileFeatureOneShot.size(); i++)
+            {   int loop=0;
+                String[] contentFeatureFile = SplitUsingTokenizer(readTextFile(nameAllFileFeatureOneShot.get(i))," ");
+                for (int j=3; i<contentFeatureFile.length;j++)
+                {
+                    result.set(i, loop,Double.parseDouble(contentFeatureFile[j]));
+                    loop++;
+                }
+            }
+          return result;
+        }
+        else return null;
+
     }
+
 }

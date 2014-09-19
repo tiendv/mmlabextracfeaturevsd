@@ -6,6 +6,7 @@
 
 package mmllabvsdextractfeature;
 
+import Jama.Matrix;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
@@ -100,18 +101,27 @@ public class MMllabVSDExtractFeature {
             for(int n=0;n<allFrameInZipFolder.size()/25;n++)
             {
                 // Process with 1 
+                    ArrayList <String> nameAllFrameOneShot = new ArrayList<>();
                     for(;indexFrame<Math.min((n+1)*25,allFrameInZipFolder.size());indexFrame++){
                         String imageForExtract = outPutFolder+"/"+allFrameInZipFolder.get(indexFrame).toFullName()+".jpg";
                         String resultNameAfterExtract = outPutFolder+"/"+allFrameInZipFolder.get(indexFrame).toFullName()+".txt";
+                        nameAllFrameOneShot.add(resultNameAfterExtract);
                         // extract and Delete image file --> ouput image'feature
-                        utilityClass.excuteFeatureExtractionAnImage(EXTRACTFEATUREANDDELETESOURCEIMAGESHFILE, "0", CUDAOVERFEATPATH,imageForExtract ,resultNameAfterExtract);
+                       // utilityClass.excuteFeatureExtractionAnImage(EXTRACTFEATUREANDDELETESOURCEIMAGESHFILE, "0", CUDAOVERFEATPATH,imageForExtract ,resultNameAfterExtract);
                         System.out.print( outPutFolder+"/"+allFrameInZipFolder.get(indexFrame).toFullName()+"\n");
-                        indexFrame++;
+                    }
+                    // Pooling 
+                    Matrix test = utilityClass.buidMatrixFeatureOneShot(nameAllFrameOneShot);
+                    System.out.println("Number of deim");
+                    System.out.println("number of dim"+test.getColumnDimension());
+
+                    for (int frameCount=0;frameCount<nameAllFrameOneShot.size();frameCount++)
+                    {  // Delete feature extract file
+                       System.out.println("Delete file feature");
+                       utilityClass.deletefile(DELETEFILE, nameAllFrameOneShot.get(frameCount));
                     }
                     
-                    // Pooling 
-                    System.out.print("The end of one's shot"+"\n"+n);
-                
+                    System.out.print("The end of one's shot"+"\n"+n);  
             }
             
             /**
