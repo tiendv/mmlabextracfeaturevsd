@@ -8,6 +8,8 @@ package mmllabvsdextractfeature;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -194,5 +196,28 @@ public class Utility {
         while ((line = reader.readLine()) != null) {
             System.out.println(line);
         }
+    }
+    /**
+     * 
+     * @param filePath
+     * @return
+     * @throws FileNotFoundException
+     * @throws IOException 
+     */
+    
+    public String readTextFile (String filePath) throws FileNotFoundException, IOException {
+        BufferedReader br = new BufferedReader(new FileReader(filePath));
+        String result;
+        while ((result = br.readLine()) != null) {
+           System.out.println(result);// process the line.
+        }
+        br.close();
+        return result;
+    }
+    
+    public ArrayList<Float> featureVector (String fileFeaturePath){
+        ArrayList<Float> result  = new ArrayList();
+        
+        return result;
     }
 }

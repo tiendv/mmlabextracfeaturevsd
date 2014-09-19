@@ -18,8 +18,6 @@ export CUDA_VISIBLE_DEVICES=$1
 cd $2
 ./overfeat_cuda -f $3>$4
 
-# delete file  result extract feature file
-
-rm -r -f /$3
+# delete file  result extract feature file;
 # Log ending time
 date 
