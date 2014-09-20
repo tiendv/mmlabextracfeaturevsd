@@ -213,6 +213,12 @@ public class Utility {
         String result = new Scanner(new File(filePath)).useDelimiter("\\Z").next();
         return result;
     }
+    /**
+     * 
+     * @param nameAllFileFeatureOneShot
+     * @return
+     * @throws IOException 
+     */
     
     public Matrix buidMatrixFeatureOneShot (ArrayList<String> nameAllFileFeatureOneShot) throws IOException{
         
@@ -234,5 +240,48 @@ public class Utility {
         else return null;
 
     }
+    public void savePoolingFeatureOneShotFromMatrix( Matrix shotFeatureMatrix, String pathToSave, String nameShotInFilm) {
+        // Make 
+        ArrayList<String> maxPooling = new ArrayList<>();
+        ArrayList<String> averagePooling = new ArrayList<>();
+        for(int i=1; i<shotFeatureMatrix.getColumnDimension();i++)
+        {
+            Double maxInColumn = Double.MIN_VALUE;
+            int average = 0;
+            for (int j =1; j <shotFeatureMatrix.getRowDimension();j++) 
+            {
+                if (shotFeatureMatrix.get(i, j)> maxInColumn)
+                    maxInColumn=shotFeatureMatrix.get(i, j);
+                
+                average =(int) (average +shotFeatureMatrix.get(i, j));
+            }
+            maxPooling.add(String.valueOf(maxInColumn));
+            averagePooling.add(String.valueOf(average/shotFeatureMatrix.getRowDimension()));
+        }
+        System.out.println("Result Pooling"+"\n");
+        System.out.println("MAX Pooling"+"\n");
+        for (int t=0; t <maxPooling.size() ;t ++)
+        {
+           System.out.println(maxPooling.get(t)+" ");
+        }
+        
+         System.out.println("AVG Pooling"+"\n");
+        for (int t=0; t <averagePooling.size() ;t ++)
+        {
+           System.out.println(maxPooling.get(t)+" ");
+        }
+    }
+    
+//    public Double getMaximumOfColumn ()
+//    {
+//        for ( int i = 0; i < A.length; i++ )
+//        {
+//            max = Integer.MIN_VALUE;
+//            for ( int j = 0; j < A [ i ].length; j++ )
+//                if ( A [ j ] [ i ] > max )
+//                    max = A [ j ] [ i ];
+//            System.out.println( "Maximum of column " + i + " = " + max );
+//        }
+//    }
 
 }
