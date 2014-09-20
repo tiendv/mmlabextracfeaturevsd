@@ -72,7 +72,9 @@ public class MMllabVSDExtractFeature {
         ArrayList<FileStructer> listFileFromMetadata = metdata.readMetadata(metadataFileDir);
         
         // process with all Folder in metdata file
-        
+//        String test = utilityClass.readTextFile("C:\\Users\\tiendv\\Downloads\\VSD_devel2011_1.shot_1.RKF_1.Frame_1.txt");
+//        System.out.println(test);
+
         for (int i =0; i< listFileFromMetadata.size();i++){
            
             //Un zip file
@@ -107,19 +109,22 @@ public class MMllabVSDExtractFeature {
                         String resultNameAfterExtract = outPutFolder+"/"+allFrameInZipFolder.get(indexFrame).toFullName()+".txt";
                         nameAllFrameOneShot.add(resultNameAfterExtract);
                         // extract and Delete image file --> ouput image'feature
-                       // utilityClass.excuteFeatureExtractionAnImage(EXTRACTFEATUREANDDELETESOURCEIMAGESHFILE, "0", CUDAOVERFEATPATH,imageForExtract ,resultNameAfterExtract);
-                        System.out.print( outPutFolder+"/"+allFrameInZipFolder.get(indexFrame).toFullName()+"\n");
+                        utilityClass.excuteFeatureExtractionAnImage(EXTRACTFEATUREANDDELETESOURCEIMAGESHFILE, "0", CUDAOVERFEATPATH,imageForExtract ,resultNameAfterExtract);
                     }
                     // Pooling 
                     Matrix test = utilityClass.buidMatrixFeatureOneShot(nameAllFrameOneShot);
-                    System.out.println("Number of deim");
-                    System.out.println("number of dim"+test.getColumnDimension());
+                    
+                    // Save A file 
+                    System.out.println("Number of row" + test.getRowDimension()+"\n");
+                    System.out.println("number of dim"+test.getColumnDimension()+"\n");
 
                     for (int frameCount=0;frameCount<nameAllFrameOneShot.size();frameCount++)
                     {  // Delete feature extract file
                        System.out.println("Delete file feature");
                        utilityClass.deletefile(DELETEFILE, nameAllFrameOneShot.get(frameCount));
                     }
+                    // Release one shot data
+                    nameAllFrameOneShot.clear();
                     
                     System.out.print("The end of one's shot"+"\n"+n);  
             }
