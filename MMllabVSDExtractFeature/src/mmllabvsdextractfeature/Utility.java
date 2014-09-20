@@ -9,11 +9,13 @@ import Jama.Matrix;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Scanner;
 import java.util.StringTokenizer;
 import javax.imageio.ImageIO;
 import org.imgscalr.Scalr;
@@ -207,13 +209,8 @@ public class Utility {
      * @throws IOException 
      */
     
-    static String readTextFile (String filePath) throws FileNotFoundException, IOException {
-        BufferedReader br = new BufferedReader(new FileReader(filePath));
-        String result;
-        while ((result = br.readLine()) != null) {
-           System.out.println(result);// process the line.
-        }
-        br.close();
+    public  String readTextFile (String filePath) throws FileNotFoundException, IOException {
+        String result = new Scanner(new File(filePath)).useDelimiter("\\Z").next();
         return result;
     }
     
@@ -226,7 +223,7 @@ public class Utility {
             for (int i=0;i<nameAllFileFeatureOneShot.size(); i++)
             {   int loop=0;
                 String[] contentFeatureFile = SplitUsingTokenizer(readTextFile(nameAllFileFeatureOneShot.get(i))," ");
-                for (int j=3; i<contentFeatureFile.length;j++)
+                for (int j=3; j<contentFeatureFile.length;j++)
                 {
                     result.set(i, loop,Double.parseDouble(contentFeatureFile[j]));
                     loop++;
