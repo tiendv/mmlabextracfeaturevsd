@@ -113,6 +113,7 @@ public class MMllabVSDExtractFeature {
                     }
                     // Pooling 
                     Matrix test = utilityClass.buidMatrixFeatureOneShot(nameAllFrameOneShot);
+                    utilityClass.savePoolingFeatureOneShotFromMatrix(test,folderName,folderName);
                     
                     // Save A file 
                     System.out.println("Number of row" + test.getRowDimension()+"\n");
