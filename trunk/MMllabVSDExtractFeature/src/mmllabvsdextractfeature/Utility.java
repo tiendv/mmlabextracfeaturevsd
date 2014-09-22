@@ -94,11 +94,11 @@ public class Utility {
         Boolean result = false;
         ProcessBuilder pb = new ProcessBuilder(unTarScriptShFile, folderForUnTar, dirtoSave);
         Process process = pb.start();
-//        BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-//        String line = null;
-//        while ((line = reader.readLine()) != null) {
-//         //   System.out.println(line);
-//        }
+        BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+        String line = null;
+        while ((line = reader.readLine()) != null) {
+         //   System.out.println(line);
+        }
         return result;
 
     }
@@ -116,11 +116,11 @@ public class Utility {
         //ProcessBuilder pb = new ProcessBuilder("/home/tiendv/NetBeansProjects/trunk/MMllabVSDExtractFeature/src/mmllabvsdextractfeature/unzip.sh","/home/tiendv/Downloads/tiendv.tar","/home/tiendv");
         ProcessBuilder pb = new ProcessBuilder(extractfeatureSHFile, gpuID, cudapath, imageForExtract, resultFeatureExtraction);
         Process process = pb.start();
-//        BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-//        String line = null;
-//        while ((line = reader.readLine()) != null) {
-//            System.out.println(line);
-//        }
+        BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+        String line = null;
+        while ((line = reader.readLine()) != null) {
+            System.out.println(line);
+        }
     }
 
     /**
@@ -185,11 +185,11 @@ public class Utility {
     void createFolder(String pathScriptShCreateFolder, String folderPathCreate) throws IOException {
         ProcessBuilder pb = new ProcessBuilder(pathScriptShCreateFolder, folderPathCreate);
         Process process = pb.start();
-//        BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-//        String line = null;
-//        while ((line = reader.readLine()) != null) {
-//            System.out.println(line);
-//        }
+        BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+        String line = null;
+        while ((line = reader.readLine()) != null) {
+            System.out.println(line);
+        }
     }
 
     /**
@@ -202,10 +202,10 @@ public class Utility {
         ProcessBuilder pb = new ProcessBuilder(pathScriptShDeleteFolder, folderPathDelete);
         Process process = pb.start();
         BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-//        String line = null;
-//        while ((line = reader.readLine()) != null) {
-//            System.out.println(line);
-//        }
+        String line = null;
+        while ((line = reader.readLine()) != null) {
+            System.out.println(line);
+        }
     }
 
     /**
@@ -218,11 +218,11 @@ public class Utility {
     void deletefile(String pathScriptShDeleteFolder, String pathFileDelete) throws IOException {
         ProcessBuilder pb = new ProcessBuilder(pathScriptShDeleteFolder, pathFileDelete);
         Process process = pb.start();
-//        BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-//        String line = null;
-//        while ((line = reader.readLine()) != null) {
-//            System.out.println(line);
-//        }
+        BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+        String line = null;
+        while ((line = reader.readLine()) != null) {
+            System.out.println(line);
+        }
     }
 
     /**
@@ -238,11 +238,11 @@ public class Utility {
     void extractFeatureAnImage(String scriptSHExtractFeature , String cudaPath, String imageName, String placeToSaveImage) throws IOException {
         ProcessBuilder pb = new ProcessBuilder(scriptSHExtractFeature, cudaPath, imageName, placeToSaveImage);
         Process process = pb.start();
-//        BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-//        String line = null;
-//        while ((line = reader.readLine()) != null) {
-//            System.out.println(line);
-//        }
+        BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+        String line = null;
+        while ((line = reader.readLine()) != null) {
+            System.out.println(line);
+        }
     }
     
     /**
