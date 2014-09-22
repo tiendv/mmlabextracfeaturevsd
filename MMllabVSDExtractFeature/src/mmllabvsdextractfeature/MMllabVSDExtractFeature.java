@@ -118,13 +118,14 @@ public class MMllabVSDExtractFeature {
                     }
                     // Pooling 
                     
-                    DenseMatrix64F resultMaTrixFeatureOneShot = utilityClass.buidEJMLMatrixFeatureOneShot(nameAllFrameOneShot);
-                    utilityClass.savePoolingFeatureOneShotWithEJMLFromMatrix(resultMaTrixFeatureOneShot,outPutFolder,shotAndFolderName);
+//                    DenseMatrix64F resultMaTrixFeatureOneShot = utilityClass.buidEJMLMatrixFeatureOneShot(nameAllFrameOneShot);
+//                    utilityClass.savePoolingFeatureOneShotWithEJMLFromMatrix(resultMaTrixFeatureOneShot,outPutFolder,shotAndFolderName);
+                    
+                      utilityClass.buidPoolingFileWithOutMatrixFeatureOneShot(nameAllFrameOneShot,outPutFolder,shotAndFolderName);
                     // Save A file 
 
                     for (int frameCount=0;frameCount<nameAllFrameOneShot.size();frameCount++)
                     {  // Delete feature extract file
-                       //System.out.println("Delete file feature");
                        utilityClass.deletefile(DELETEFILE, nameAllFrameOneShot.get(frameCount));
                     }
                     // Release one shot data
