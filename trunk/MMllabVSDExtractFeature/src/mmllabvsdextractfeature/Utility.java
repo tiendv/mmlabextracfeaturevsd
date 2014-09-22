@@ -296,10 +296,10 @@ public class Utility {
         ArrayList<String> averagePooling = new ArrayList<>();
         for(int column=0; column<shotFeatureMatrix.numCols;column++)
         {
-            float maxInColumn = Float.MIN_VALUE;
+            float maxInColumn = -1000;
             float average = 0;
             for (int rows =0; rows <shotFeatureMatrix.numRows;rows++) 
-            {
+            {   
                 if (shotFeatureMatrix.unsafe_get(rows, column)> maxInColumn)
                     maxInColumn=(float) shotFeatureMatrix.unsafe_get(rows, column);
                 
