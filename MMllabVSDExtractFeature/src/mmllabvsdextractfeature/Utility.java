@@ -33,7 +33,8 @@ public class Utility {
      * @return 
      */
     public String[] SplitUsingTokenizer(String subject, String delimiters) {
-        StringTokenizer strTkn = new StringTokenizer(subject, delimiters);
+        String[] lines = subject.split("\n");
+        StringTokenizer strTkn = new StringTokenizer(lines[1], delimiters);
         ArrayList<String> arrLis = new ArrayList<String>(subject.length());
         while (strTkn.hasMoreTokens()) {
             arrLis.add(strTkn.nextToken());
@@ -49,7 +50,8 @@ public class Utility {
      * @return 
      */
     public ArrayList<Float> splitStringToGetFloadValueUsingTokenizer(String subject, String delimiters) {
-        StringTokenizer strTkn = new StringTokenizer(subject, delimiters);
+        String[] lines = subject.split("\n");
+        StringTokenizer strTkn = new StringTokenizer(lines[1], delimiters);
         ArrayList<Float> arrLis = new ArrayList<Float>(subject.length());
         while (strTkn.hasMoreTokens()) {
             arrLis.add(Float.parseFloat(strTkn.nextToken()));
@@ -246,12 +248,12 @@ public class Utility {
         
         if(!nameAllFileFeatureOneShot.isEmpty()){
         int row = nameAllFileFeatureOneShot.size();
-        int colunm = SplitUsingTokenizer(readTextFile(nameAllFileFeatureOneShot.get(0))," ").length -3;
+        int colunm = SplitUsingTokenizer(readTextFile(nameAllFileFeatureOneShot.get(0))," ").length;
         Matrix result = new Matrix(row,colunm);
             for (int i=0;i<nameAllFileFeatureOneShot.size(); i++)
             {   int loop=0;
                 String[] contentFeatureFile = SplitUsingTokenizer(readTextFile(nameAllFileFeatureOneShot.get(i))," ");
-                for (int j=3; j<contentFeatureFile.length;j++)
+                for (int j=0; j<contentFeatureFile.length;j++)
                 {
                     result.set(i, loop,Double.parseDouble(contentFeatureFile[j]));
                     loop++;
@@ -267,12 +269,12 @@ public class Utility {
         
         if(!nameAllFileFeatureOneShot.isEmpty()){
         int row = nameAllFileFeatureOneShot.size();
-        int colunm = SplitUsingTokenizer(readTextFile(nameAllFileFeatureOneShot.get(0))," ").length -3;
+        int colunm = SplitUsingTokenizer(readTextFile(nameAllFileFeatureOneShot.get(0))," ").length;
         DenseMatrix64F result = new DenseMatrix64F(row,colunm);
             for (int i=0;i<nameAllFileFeatureOneShot.size(); i++)
             {   int loop=0;
                 ArrayList<Float> contentFeatureFile = splitStringToGetFloadValueUsingTokenizer(readTextFile(nameAllFileFeatureOneShot.get(i))," ");
-                for (int j=3; j<contentFeatureFile.size();j++)
+                for (int j=0; j<contentFeatureFile.size();j++)
                 {
                     result.unsafe_set(i, loop,contentFeatureFile.get(j));
                     loop++;
