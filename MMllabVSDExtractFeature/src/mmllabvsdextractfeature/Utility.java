@@ -302,16 +302,16 @@ public class Utility {
         // Make 
         ArrayList<String> maxPooling = new ArrayList<>();
         ArrayList<String> averagePooling = new ArrayList<>();
-        for(int i=0; i<shotFeatureMatrix.numCols;i++)
+        for(int column=0; column<shotFeatureMatrix.numCols;column++)
         {
             float maxInColumn = 0;
             float average = 0;
-            for (int j =1; j <shotFeatureMatrix.numRows;j++) 
+            for (int rows =0; rows <shotFeatureMatrix.numRows;rows++) 
             {
-                if (shotFeatureMatrix.get(i, j)> maxInColumn)
-                    maxInColumn=(float) shotFeatureMatrix.unsafe_get(i, j);
+                if (shotFeatureMatrix.get(rows, column)> maxInColumn)
+                    maxInColumn=(float) shotFeatureMatrix.unsafe_get(rows, column);
                 
-                average =(float) (average +shotFeatureMatrix.unsafe_get(i, j));
+                average =(float) (average +shotFeatureMatrix.unsafe_get(rows, column));
             }
             maxPooling.add(String.valueOf(maxInColumn));
             averagePooling.add(String.valueOf(average/shotFeatureMatrix.numRows));
