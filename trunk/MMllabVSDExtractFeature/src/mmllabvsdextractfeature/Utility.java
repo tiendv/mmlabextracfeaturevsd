@@ -274,7 +274,7 @@ public class Utility {
                 ArrayList<Float> contentFeatureFile = splitStringToGetFloadValueUsingTokenizer(readTextFile(nameAllFileFeatureOneShot.get(i))," ");
                 for (int j=3; j<contentFeatureFile.size();j++)
                 {
-                    result.set(i, loop,contentFeatureFile.get(j));
+                    result.unsafe_set(i, loop,contentFeatureFile.get(j));
                     loop++;
                 }
             }
@@ -288,11 +288,11 @@ public class Utility {
         // Make 
         ArrayList<String> maxPooling = new ArrayList<>();
         ArrayList<String> averagePooling = new ArrayList<>();
-        for(int i=1; i<shotFeatureMatrix.numCols;i++)
+        for(int i=0; i<shotFeatureMatrix.numCols;i++)
         {
             float maxInColumn = 0;
             float average = 0;
-            for (int j =1; j <shotFeatureMatrix.numRows+1;j++) 
+            for (int j =1; j <shotFeatureMatrix.numRows;j++) 
             {
                 if (shotFeatureMatrix.get(i, j)> maxInColumn)
                     maxInColumn=(float) shotFeatureMatrix.unsafe_get(i, j);
