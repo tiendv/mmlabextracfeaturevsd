@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 import javax.imageio.ImageIO;
+import org.ejml.data.DenseMatrix64F;
 import org.imgscalr.Scalr;
 
 /**
@@ -25,7 +26,12 @@ import org.imgscalr.Scalr;
  * @author tiendv
  */
 public class Utility {
-
+    /**
+     * 
+     * @param subject
+     * @param delimiters
+     * @return 
+     */
     public String[] SplitUsingTokenizer(String subject, String delimiters) {
         StringTokenizer strTkn = new StringTokenizer(subject, delimiters);
         ArrayList<String> arrLis = new ArrayList<String>(subject.length());
@@ -34,6 +40,22 @@ public class Utility {
         }
 
         return arrLis.toArray(new String[0]);
+    }
+    
+        /**
+     * 
+     * @param subject
+     * @param delimiters
+     * @return 
+     */
+    public ArrayList<Float> splitStringToGetFloadValueUsingTokenizer(String subject, String delimiters) {
+        StringTokenizer strTkn = new StringTokenizer(subject, delimiters);
+        ArrayList<Float> arrLis = new ArrayList<Float>(subject.length());
+        while (strTkn.hasMoreTokens()) {
+            arrLis.add(Float.parseFloat(strTkn.nextToken()));
+        }
+
+        return arrLis;
     }
 
     /**
@@ -240,7 +262,61 @@ public class Utility {
         else return null;
 
     }
-    public void savePoolingFeatureOneShotFromMatrix( Matrix shotFeatureMatrix, String pathToSave, String nameShotInFilm) {
+    
+     public DenseMatrix64F buidEJMLMatrixFeatureOneShot (ArrayList<String> nameAllFileFeatureOneShot) throws IOException{
+        
+        if(!nameAllFileFeatureOneShot.isEmpty()){
+        int row = nameAllFileFeatureOneShot.size();
+        int colunm = SplitUsingTokenizer(readTextFile(nameAllFileFeatureOneShot.get(0))," ").length -3;
+        DenseMatrix64F result = new DenseMatrix64F(row,colunm);
+            for (int i=0;i<nameAllFileFeatureOneShot.size(); i++)
+            {   int loop=0;
+                ArrayList<Float> contentFeatureFile = splitStringToGetFloadValueUsingTokenizer(readTextFile(nameAllFileFeatureOneShot.get(i))," ");
+                for (int j=3; j<contentFeatureFile.size();j++)
+                {
+                    result.set(i, loop,contentFeatureFile.get(j));
+                    loop++;
+                }
+            }
+          return result;
+        }
+        else return null;
+
+    }
+     
+    public void savePoolingFeatureOneShotWithEJMLFromMatrix( DenseMatrix64F shotFeatureMatrix, String pathToSave, String nameShotInFilm) {
+        // Make 
+        ArrayList<String> maxPooling = new ArrayList<>();
+        ArrayList<String> averagePooling = new ArrayList<>();
+        for(int i=1; i<shotFeatureMatrix.numCols;i++)
+        {
+            float maxInColumn = 0;
+            float average = 0;
+            for (int j =1; j <shotFeatureMatrix.numRows+1;j++) 
+            {
+                if (shotFeatureMatrix.get(i, j)> maxInColumn)
+                    maxInColumn=(float) shotFeatureMatrix.unsafe_get(i, j);
+                
+                average =(float) (average +shotFeatureMatrix.unsafe_get(i, j));
+            }
+            maxPooling.add(String.valueOf(maxInColumn));
+            averagePooling.add(String.valueOf(average/shotFeatureMatrix.numRows));
+        }
+        System.out.println("Result Pooling"+"\n");
+        System.out.println("MAX Pooling"+"\n");
+        for (int t=0; t <maxPooling.size() ;t ++)
+        {
+           System.out.println(maxPooling.get(t)+" ");
+        }
+        
+         System.out.println("AVG Pooling"+"\n");
+        for (int t=0; t <averagePooling.size() ;t ++)
+        {
+           System.out.println(maxPooling.get(t)+" ");
+        }
+    }
+    
+      public void savePoolingFeatureOneShotWithFromMatrix( Matrix shotFeatureMatrix, String pathToSave, String nameShotInFilm) {
         // Make 
         ArrayList<String> maxPooling = new ArrayList<>();
         ArrayList<String> averagePooling = new ArrayList<>();
@@ -272,16 +348,16 @@ public class Utility {
         }
     }
     
-//    public Double getMaximumOfColumn ()
-//    {
-//        for ( int i = 0; i < A.length; i++ )
-//        {
-//            max = Integer.MIN_VALUE;
-//            for ( int j = 0; j < A [ i ].length; j++ )
-//                if ( A [ j ] [ i ] > max )
-//                    max = A [ j ] [ i ];
-//            System.out.println( "Maximum of column " + i + " = " + max );
-//        }
-//    }
+    public void buidPoolOneShot (ArrayList<String> nameAllFileFeatureOneShot) throws IOException{
+        
+        if(!nameAllFileFeatureOneShot.isEmpty()){
+        int row = nameAllFileFeatureOneShot.size();
+        for (int i=0;i<nameAllFileFeatureOneShot.size(); i++)
+        {   
+            ArrayList <Float> contentFeatureFile = splitStringToGetFloadValueUsingTokenizer(readTextFile(nameAllFileFeatureOneShot.get(i))," ");
+        }
+        }
+
+    }
 
 }
