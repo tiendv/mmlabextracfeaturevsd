@@ -296,14 +296,14 @@ public class Utility {
         ArrayList<String> averagePooling = new ArrayList<>();
         for(int column=0; column<shotFeatureMatrix.numCols;column++)
         {
-            int maxInColumn = Integer.MIN_VALUE;
-            int average = 0;
+            float maxInColumn = Float.MIN_VALUE;
+            float average = 0;
             for (int rows =0; rows <shotFeatureMatrix.numRows;rows++) 
             {
                 if (shotFeatureMatrix.unsafe_get(rows, column)> maxInColumn)
-                    maxInColumn=(int) shotFeatureMatrix.unsafe_get(rows, column);
+                    maxInColumn=(float) shotFeatureMatrix.unsafe_get(rows, column);
                 
-                average =(int) (average +shotFeatureMatrix.unsafe_get(rows, column));
+                average =(float) (average +shotFeatureMatrix.unsafe_get(rows, column));
             }
             maxPooling.add(String.valueOf(maxInColumn));
             averagePooling.add(String.valueOf(average/shotFeatureMatrix.numRows));
