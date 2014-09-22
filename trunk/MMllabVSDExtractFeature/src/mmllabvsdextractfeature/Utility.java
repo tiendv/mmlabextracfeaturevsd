@@ -14,6 +14,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 import javax.imageio.ImageIO;
@@ -269,7 +270,7 @@ public class Utility {
         if(!nameAllFileFeatureOneShot.isEmpty()){
         int row = nameAllFileFeatureOneShot.size();
         int colunm = SplitUsingTokenizer(readTextFile(nameAllFileFeatureOneShot.get(0))," ").length;
-        DenseMatrix64F result = new DenseMatrix64F(row,colunm);
+            DenseMatrix64F result = new DenseMatrix64F(row,colunm);
             for (int i=0;i<nameAllFileFeatureOneShot.size(); i++)
             {   int loop=0;
                 ArrayList<Float> contentFeatureFile = splitStringToGetFloadValueUsingTokenizer(readTextFile(nameAllFileFeatureOneShot.get(i))," ");
@@ -279,16 +280,50 @@ public class Utility {
                     loop++;
                 }
             }
-//            
-//           System.out.println("Gia tri trong mot cot 25 value: \n");
-//           for(int i=0;i<result.getNumRows();i++)
-//           System.out.println(result.unsafe_get(i,0)+"\n");
-//           System.out.println("Het:\n");
           return result;
         }
         else return null;
 
     }
+     
+   public void buidPoolingFileWithOutMatrixFeatureOneShot (ArrayList<String> nameAllFileFeatureOneShot, String pathToSave, String nameShotInFilm) throws IOException{
+        
+        if(!nameAllFileFeatureOneShot.isEmpty()){
+            int row = nameAllFileFeatureOneShot.size();
+            int colunm = SplitUsingTokenizer(readTextFile(nameAllFileFeatureOneShot.get(0))," ").length;
+            ArrayList<Float> maxPooling = new ArrayList<>();
+            for(int i=0;i< colunm;i++) {
+                float temp = -100;
+                maxPooling.add(temp);
+            }
+            ArrayList<Float> avrPooling = new ArrayList<>();
+            for (int i=0;i<nameAllFileFeatureOneShot.size(); i++)
+            {   
+                ArrayList<Float> contentFeatureFile = splitStringToGetFloadValueUsingTokenizer(readTextFile(nameAllFileFeatureOneShot.get(i))," ");
+                for (int j=0; j<contentFeatureFile.size();j++)
+                {   
+                    // for Max;
+                    if (contentFeatureFile.get(j)>maxPooling.get(j))
+                        maxPooling.set(j, contentFeatureFile.get(j));
+                    // For Everage
+                    float temp = avrPooling.get(j);
+                    avrPooling.set(j, temp+contentFeatureFile.get(j));
+                }
+            }
+            for (int i =0; i<colunm;i++) {
+                float temp = avrPooling.get(i);
+                avrPooling.set(i,temp/row);
+            }
+            String nameMax = pathToSave+"/"+nameShotInFilm+""+".MAXPooling." +".txt";
+            writeToFileWithArrayListFloat(nameMax, maxPooling);
+
+            String nameAVR = pathToSave+"/"+nameShotInFilm+".AVRPooling." + ".txt";
+            writeToFileWithArrayListFloat(nameAVR, avrPooling);
+        }
+       
+
+    }
+     
      
     public void savePoolingFeatureOneShotWithEJMLFromMatrix( DenseMatrix64F shotFeatureMatrix, String pathToSave, String nameShotInFilm) throws IOException {
         // Make 
@@ -330,6 +365,16 @@ public class Utility {
                 try(FileWriter writer = new FileWriter(file.getAbsoluteFile(), true)) {
                     for(int i=0; i< contentToSave.size();i++)
                         builder.append(contentToSave.get(i)).append(" ");
+                        writer.append(builder).toString().trim();
+                }
+    }
+    
+     public void writeToFileWithArrayListFloat(String nameFullPathFile, ArrayList<Float> contentToSave) throws IOException {
+                File file = new File(nameFullPathFile);
+                StringBuilder builder = new StringBuilder();
+                try(FileWriter writer = new FileWriter(file.getAbsoluteFile(), true)) {
+                    for(int i=0; i< contentToSave.size();i++)
+                        builder.append(String.valueOf(contentToSave.get(i))).append(" ");
                         writer.append(builder).toString().trim();
                 }
     }
