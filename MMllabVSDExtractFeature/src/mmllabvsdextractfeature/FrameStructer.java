@@ -52,8 +52,8 @@ public class FrameStructer {
 
 	public int compare(FrameStructer s1, FrameStructer s2) {
                 
-	   int rollno1 = Integer.parseInt(utility.SplitUsingTokenizer(s1.shotID, "_")[1]);
-	   int rollno2 = Integer.parseInt(utility.SplitUsingTokenizer(s2.shotID, "_")[1]);
+	   int rollno1 = Integer.parseInt(utility.SplitUsingTokenizerWithLine(s1.shotID, "_")[1]);
+	   int rollno2 = Integer.parseInt(utility.SplitUsingTokenizerWithLine(s2.shotID, "_")[1]);
 
 	   /*For ascending order*/
 	   return rollno1-rollno2;
