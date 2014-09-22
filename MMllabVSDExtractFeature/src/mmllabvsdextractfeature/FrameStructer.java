@@ -37,7 +37,7 @@ public class FrameStructer {
         File[] listAllFileInFolder = utility.listAllFileInFolder(pathZipFolder);
         for (int i=0; i<listAllFileInFolder.length; i++){
             FrameStructer temp = new FrameStructer();
-            String[] parts =  utility.SplitUsingTokenizer(listAllFileInFolder[i].getName(), ".");
+            String[] parts =  utility.SplitUsingTokenizerWithLine(listAllFileInFolder[i].getName(), ".");
             temp.folder = parts[0];
             temp.shotID = parts[1];
             temp.filmID =  parts[2];

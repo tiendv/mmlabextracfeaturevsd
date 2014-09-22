@@ -43,6 +43,18 @@ public class Utility {
         return arrLis.toArray(new String[0]);
     }
     
+      public String[] SplitUsingTokenizerWithLine(String subject, String delimiters) {
+        StringTokenizer strTkn = new StringTokenizer(subject, delimiters);
+        ArrayList<String> arrLis = new ArrayList<String>(subject.length());
+        while (strTkn.hasMoreTokens()) {
+            arrLis.add(strTkn.nextToken());
+        }
+
+        return arrLis.toArray(new String[0]);
+    }
+    
+    
+    
         /**
      * 
      * @param subject

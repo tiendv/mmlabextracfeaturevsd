@@ -67,7 +67,7 @@ public class FileStructer {
                 }
                 for(int i=0; i<line.size(); i++){
                     FileStructer temp = new FileStructer();
-                    String[] parts =  utility.SplitUsingTokenizer(line.get(i), "#$#");
+                    String[] parts =  utility.SplitUsingTokenizerWithLine(line.get(i), "#$#");
                     temp.nameZipFileName = parts[0];
                     temp.wholeFolderName = parts[2];
                     result.add(temp);
