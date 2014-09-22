@@ -97,7 +97,6 @@ public class MMllabVSDExtractFeature {
             ArrayList <FrameStructer> allFrameInZipFolder = new ArrayList<>();
             allFrameInZipFolder = frameStructer.getListFileInZipFolder(outPutFolder);
             System.out.println(allFrameInZipFolder.size());         
-            
             // sort with shot ID
             Collections.sort(allFrameInZipFolder,FrameStructer.frameIDNo);
             
@@ -132,6 +131,10 @@ public class MMllabVSDExtractFeature {
                     nameAllFrameOneShot.clear();
                     System.out.print("The end of one's shot"+"\n"+n);  
             }
+            // Delete zip file
+            utilityClass.deletefile(DELETEFILE,nameZipFile);
+            
+            // Zip Whole Folder
             
             /**
              * Extract 1 shot
