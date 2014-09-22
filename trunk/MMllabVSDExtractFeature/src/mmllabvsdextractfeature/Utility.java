@@ -116,11 +116,11 @@ public class Utility {
         //ProcessBuilder pb = new ProcessBuilder("/home/tiendv/NetBeansProjects/trunk/MMllabVSDExtractFeature/src/mmllabvsdextractfeature/unzip.sh","/home/tiendv/Downloads/tiendv.tar","/home/tiendv");
         ProcessBuilder pb = new ProcessBuilder(extractfeatureSHFile, gpuID, cudapath, imageForExtract, resultFeatureExtraction);
         Process process = pb.start();
-        BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-        String line = null;
-        while ((line = reader.readLine()) != null) {
-            System.out.println(line);
-        }
+//        BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+//        String line = null;
+//        while ((line = reader.readLine()) != null) {
+//            System.out.println(line);
+//        }
     }
 
     /**
@@ -154,7 +154,7 @@ public class Utility {
         BufferedImage scaledImg = Scalr.resize(img, Scalr.Mode.AUTOMATIC, targetWidth, targetHeight);
         File destFile = new File(saveDir + imageName + ".jpg");
         ImageIO.write(scaledImg, "jpg", destFile);
-        System.out.println("Done resizing");
+//        System.out.println("Done resizing");
     }
 
     /**
@@ -168,13 +168,12 @@ public class Utility {
     void resizeWholeFolder(String pathFolderResize, String pathFolderSave, int targetWidth, int targetHeight) throws IOException {
         File[] listAllFileInFolder = this.listAllFileInFolder(pathFolderResize);
         for (int i = 0; i < listAllFileInFolder.length; i++) {
-
             BufferedImage img = ImageIO.read(new File(listAllFileInFolder[i].getAbsolutePath()));
             BufferedImage scaledImg = Scalr.resize(img, Scalr.Mode.AUTOMATIC, targetWidth, targetHeight);
             File destFile = new File(pathFolderSave + "/" + listAllFileInFolder[i].getName());
             ImageIO.write(scaledImg, "jpg", destFile);
         }
-        System.out.println("Done resizing");
+//        System.out.println("Done resizing");
     }
 
     /**
@@ -186,11 +185,11 @@ public class Utility {
     void createFolder(String pathScriptShCreateFolder, String folderPathCreate) throws IOException {
         ProcessBuilder pb = new ProcessBuilder(pathScriptShCreateFolder, folderPathCreate);
         Process process = pb.start();
-        BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-        String line = null;
-        while ((line = reader.readLine()) != null) {
-            System.out.println(line);
-        }
+//        BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+//        String line = null;
+//        while ((line = reader.readLine()) != null) {
+//            System.out.println(line);
+//        }
     }
 
     /**
@@ -203,10 +202,10 @@ public class Utility {
         ProcessBuilder pb = new ProcessBuilder(pathScriptShDeleteFolder, folderPathDelete);
         Process process = pb.start();
         BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-        String line = null;
-        while ((line = reader.readLine()) != null) {
-            System.out.println(line);
-        }
+//        String line = null;
+//        while ((line = reader.readLine()) != null) {
+//            System.out.println(line);
+//        }
     }
 
     /**
@@ -219,11 +218,11 @@ public class Utility {
     void deletefile(String pathScriptShDeleteFolder, String pathFileDelete) throws IOException {
         ProcessBuilder pb = new ProcessBuilder(pathScriptShDeleteFolder, pathFileDelete);
         Process process = pb.start();
-        BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-        String line = null;
-        while ((line = reader.readLine()) != null) {
-            System.out.println(line);
-        }
+//        BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+//        String line = null;
+//        while ((line = reader.readLine()) != null) {
+//            System.out.println(line);
+//        }
     }
 
     /**
@@ -239,11 +238,11 @@ public class Utility {
     void extractFeatureAnImage(String scriptSHExtractFeature , String cudaPath, String imageName, String placeToSaveImage) throws IOException {
         ProcessBuilder pb = new ProcessBuilder(scriptSHExtractFeature, cudaPath, imageName, placeToSaveImage);
         Process process = pb.start();
-        BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-        String line = null;
-        while ((line = reader.readLine()) != null) {
-            System.out.println(line);
-        }
+//        BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+//        String line = null;
+//        while ((line = reader.readLine()) != null) {
+//            System.out.println(line);
+//        }
     }
     
     /**
@@ -280,11 +279,11 @@ public class Utility {
                     loop++;
                 }
             }
-            
-            System.out.println("Gia tri trong mot cot 25 value: \n");
-           for(int i=0;i<result.getNumRows();i++)
-           System.out.println(result.unsafe_get(i,0)+"\n");
-           System.out.println("Het:\n");
+//            
+//           System.out.println("Gia tri trong mot cot 25 value: \n");
+//           for(int i=0;i<result.getNumRows();i++)
+//           System.out.println(result.unsafe_get(i,0)+"\n");
+//           System.out.println("Het:\n");
           return result;
         }
         else return null;
@@ -311,8 +310,8 @@ public class Utility {
         }
         // Save to File
         
-        System.out.println("Result Pooling"+"\n");
-        System.out.println("MAX Pooling"+"\n");
+//        System.out.println("Result Pooling"+"\n");
+//        System.out.println("MAX Pooling"+"\n");
         String nameMax = pathToSave+"/"+nameShotInFilm+""+".MAXPooling." +".txt";
         writeToFile(nameMax, maxPooling);
         
