@@ -20,6 +20,7 @@ import java.util.Scanner;
 import java.util.StringTokenizer;
 import javax.imageio.ImageIO;
 import org.apache.commons.io.IOUtils;
+import org.ejml.data.DenseMatrix64F;
 import org.imgscalr.Scalr;
 import org.imgscalr.Scalr.Mode;
 
@@ -112,12 +113,14 @@ public class MMllabVSDExtractFeature {
                         utilityClass.excuteFeatureExtractionAnImage(EXTRACTFEATUREANDDELETESOURCEIMAGESHFILE, "0", CUDAOVERFEATPATH,imageForExtract ,resultNameAfterExtract);
                     }
                     // Pooling 
-                    Matrix test = utilityClass.buidMatrixFeatureOneShot(nameAllFrameOneShot);
-                    utilityClass.savePoolingFeatureOneShotFromMatrix(test,folderName,folderName);
                     
+                  //  Matrix test = utilityClass.buidMatrixFeatureOneShot(nameAllFrameOneShot);
+                   // utilityClass.savePoolingFeatureOneShotFromMatrix(test,folderName,folderName);
+                    DenseMatrix64F test = utilityClass.buidEJMLMatrixFeatureOneShot(nameAllFrameOneShot);
+                    utilityClass.savePoolingFeatureOneShotWithEJMLFromMatrix(test,folderName,folderName);
                     // Save A file 
-                    System.out.println("Number of row" + test.getRowDimension()+"\n");
-                    System.out.println("number of dim"+test.getColumnDimension()+"\n");
+                   // System.out.println("Number of row" + test.getRowDimension()+"\n");
+                 //   System.out.println("number of dim"+test.getColumnDimension()+"\n");
 
                     for (int frameCount=0;frameCount<nameAllFrameOneShot.size();frameCount++)
                     {  // Delete feature extract file
@@ -165,19 +168,4 @@ public class MMllabVSDExtractFeature {
 
        }
     
-    public void execPHP(String scriptName, String param) throws IOException {
-        
-      String line;
-      StringBuilder output = new StringBuilder();
-      Process p = Runtime.getRuntime().exec("php " + scriptName + " " + param);
-
-  }
-    public  String[] SplitUsingTokenizer(String subject, String delimiters) {
-        StringTokenizer strTkn = new StringTokenizer(subject, delimiters);
-        ArrayList<String> arrLis = new ArrayList<String>(subject.length());
-        while(strTkn.hasMoreTokens())
-           arrLis.add(strTkn.nextToken());
-
-        return arrLis.toArray(new String[0]);
-    }
 }
