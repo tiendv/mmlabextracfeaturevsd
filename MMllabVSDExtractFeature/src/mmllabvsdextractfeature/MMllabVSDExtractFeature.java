@@ -47,7 +47,7 @@ public class MMllabVSDExtractFeature {
         // TODO code application logic here
         MMllabVSDExtractFeature hello = new MMllabVSDExtractFeature();
         FileStructer metdata = new FileStructer();
-        Utility utilityClass = new Utility();
+        Utility utilityClassIni = new Utility();
         FrameStructer frameStructer = new FrameStructer();
 
         /*
@@ -78,7 +78,8 @@ public class MMllabVSDExtractFeature {
 //        System.out.println(test);
         
         for (int i =0; i< listFileFromMetadata.size();i++){
-           
+            
+            Utility utilityClass = new Utility();
             //Un zip file
             String folderName = listFileFromMetadata.get(i).getWholeFolderName();  
             String nameZipFile = dir+"/"+folderName+"/"+listFileFromMetadata.get(i).getNameZipFileName()+".tar";
