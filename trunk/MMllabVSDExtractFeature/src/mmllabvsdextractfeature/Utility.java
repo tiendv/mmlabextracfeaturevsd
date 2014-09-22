@@ -292,11 +292,14 @@ public class Utility {
             int row = nameAllFileFeatureOneShot.size();
             int colunm = SplitUsingTokenizer(readTextFile(nameAllFileFeatureOneShot.get(0))," ").length;
             ArrayList<Float> maxPooling = new ArrayList<>();
-            for(int i=0;i< colunm;i++) {
-                float temp = -100;
-                maxPooling.add(temp);
-            }
             ArrayList<Float> avrPooling = new ArrayList<>();
+            for(int i=0;i< colunm;i++) {
+                float temp1 = -100;
+                float temp2 = 0;
+                maxPooling.add(temp1);
+                avrPooling.add(temp2);
+            }
+           
             for (int i=0;i<nameAllFileFeatureOneShot.size(); i++)
             {   
                 ArrayList<Float> contentFeatureFile = splitStringToGetFloadValueUsingTokenizer(readTextFile(nameAllFileFeatureOneShot.get(i))," ");
@@ -319,6 +322,8 @@ public class Utility {
 
             String nameAVR = pathToSave+"/"+nameShotInFilm+".AVRPooling." + ".txt";
             writeToFileWithArrayListFloat(nameAVR, avrPooling);
+            maxPooling.clear();
+            avrPooling.clear();
         }
        
 
