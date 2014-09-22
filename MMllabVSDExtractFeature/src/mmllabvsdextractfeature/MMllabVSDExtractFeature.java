@@ -72,10 +72,11 @@ public class MMllabVSDExtractFeature {
         String metadataFileDir = "/media/data1/metdata/devel2011-new.lst";
         ArrayList<FileStructer> listFileFromMetadata = metdata.readMetadata(metadataFileDir);
         
-        // process with all Folder in metdata file
 //        String test = utilityClass.readTextFile("C:\\Users\\tiendv\\Downloads\\VSD_devel2011_1.shot_1.RKF_1.Frame_1.txt");
+//        ArrayList <String> testFeatureSave = utilityClass.SplitUsingTokenizerWithLineArrayList(test, " ");
+//        utilityClass.writeToFile("C:\\Users\\tiendv\\Downloads\\VSD_devel2011_1.shot_1.txt", testFeatureSave);
 //        System.out.println(test);
-
+        
         for (int i =0; i< listFileFromMetadata.size();i++){
            
             //Un zip file
@@ -105,8 +106,10 @@ public class MMllabVSDExtractFeature {
             {
                 // Process with 1 
                     ArrayList <String> nameAllFrameOneShot = new ArrayList<>();
+                    String shotAndFolderName = new String();
                     for(;indexFrame<Math.min((n+1)*25,allFrameInZipFolder.size());indexFrame++){
                         String imageForExtract = outPutFolder+"/"+allFrameInZipFolder.get(indexFrame).toFullName()+".jpg";
+                        shotAndFolderName=allFrameInZipFolder.get(indexFrame).shotName();
                         String resultNameAfterExtract = outPutFolder+"/"+allFrameInZipFolder.get(indexFrame).toFullName()+".txt";
                         nameAllFrameOneShot.add(resultNameAfterExtract);
                         // extract and Delete image file --> ouput image'feature
@@ -114,13 +117,9 @@ public class MMllabVSDExtractFeature {
                     }
                     // Pooling 
                     
-                  //  Matrix test = utilityClass.buidMatrixFeatureOneShot(nameAllFrameOneShot);
-                   // utilityClass.savePoolingFeatureOneShotFromMatrix(test,folderName,folderName);
-                    DenseMatrix64F test = utilityClass.buidEJMLMatrixFeatureOneShot(nameAllFrameOneShot);
-                    utilityClass.savePoolingFeatureOneShotWithEJMLFromMatrix(test,folderName,folderName);
+                    DenseMatrix64F resultMaTrixFeatureOneShot = utilityClass.buidEJMLMatrixFeatureOneShot(nameAllFrameOneShot);
+                    utilityClass.savePoolingFeatureOneShotWithEJMLFromMatrix(resultMaTrixFeatureOneShot,outPutFolder,shotAndFolderName);
                     // Save A file 
-                   // System.out.println("Number of row" + test.getRowDimension()+"\n");
-                 //   System.out.println("number of dim"+test.getColumnDimension()+"\n");
 
                     for (int frameCount=0;frameCount<nameAllFrameOneShot.size();frameCount++)
                     {  // Delete feature extract file
@@ -129,7 +128,6 @@ public class MMllabVSDExtractFeature {
                     }
                     // Release one shot data
                     nameAllFrameOneShot.clear();
-                    
                     System.out.print("The end of one's shot"+"\n"+n);  
             }
             
