@@ -265,27 +265,6 @@ public class Utility {
      * @throws IOException 
      */
     
-    public Matrix buidMatrixFeatureOneShot (ArrayList<String> nameAllFileFeatureOneShot) throws IOException{
-        
-        if(!nameAllFileFeatureOneShot.isEmpty()){
-        int row = nameAllFileFeatureOneShot.size();
-        int colunm = SplitUsingTokenizer(readTextFile(nameAllFileFeatureOneShot.get(0))," ").length;
-        Matrix result = new Matrix(row,colunm);
-            for (int i=0;i<nameAllFileFeatureOneShot.size(); i++)
-            {   int loop=0;
-                String[] contentFeatureFile = SplitUsingTokenizer(readTextFile(nameAllFileFeatureOneShot.get(i))," ");
-                for (int j=0; j<contentFeatureFile.length;j++)
-                {
-                    result.set(i, loop,Double.parseDouble(contentFeatureFile[j]));
-                    loop++;
-                }
-            }
-          return result;
-        }
-        else return null;
-
-    }
-    
      public DenseMatrix64F buidEJMLMatrixFeatureOneShot (ArrayList<String> nameAllFileFeatureOneShot) throws IOException{
         
         if(!nameAllFileFeatureOneShot.isEmpty()){
@@ -301,6 +280,11 @@ public class Utility {
                     loop++;
                 }
             }
+            
+            System.out.println("Gia tri trong mot cot 25 value: \n");
+           for(int i=0;i<result.getNumRows();i++)
+           System.out.println(result.unsafe_get(i,0)+"\n");
+           System.out.println("Het:\n");
           return result;
         }
         else return null;
@@ -313,14 +297,14 @@ public class Utility {
         ArrayList<String> averagePooling = new ArrayList<>();
         for(int column=0; column<shotFeatureMatrix.numCols;column++)
         {
-            float maxInColumn = 0;
-            float average = 0;
+            int maxInColumn = 0;
+            int average = 0;
             for (int rows =0; rows <shotFeatureMatrix.numRows;rows++) 
             {
                 if (shotFeatureMatrix.get(rows, column)> maxInColumn)
-                    maxInColumn=(float) shotFeatureMatrix.unsafe_get(rows, column);
+                    maxInColumn=(int) shotFeatureMatrix.unsafe_get(rows, column);
                 
-                average =(float) (average +shotFeatureMatrix.unsafe_get(rows, column));
+                average =(int) (average +shotFeatureMatrix.unsafe_get(rows, column));
             }
             maxPooling.add(String.valueOf(maxInColumn));
             averagePooling.add(String.valueOf(average/shotFeatureMatrix.numRows));
@@ -334,41 +318,14 @@ public class Utility {
         
         String nameAVR = pathToSave+"/"+nameShotInFilm+".AVRPooling." + ".txt";
         writeToFile(nameAVR, averagePooling);
-    }
-    
-      public void savePoolingFeatureOneShotWithFromMatrix( Matrix shotFeatureMatrix, String pathToSave, String nameShotInFilm) {
-        // Make 
-        ArrayList<String> maxPooling = new ArrayList<>();
-        ArrayList<String> averagePooling = new ArrayList<>();
-        for(int i=1; i<shotFeatureMatrix.getColumnDimension();i++)
-        {
-            Double maxInColumn = Double.MIN_VALUE;
-            int average = 0;
-            for (int j =1; j <shotFeatureMatrix.getRowDimension();j++) 
-            {
-                if (shotFeatureMatrix.get(i, j)> maxInColumn)
-                    maxInColumn=shotFeatureMatrix.get(i, j);
-                
-                average =(int) (average +shotFeatureMatrix.get(i, j));
-            }
-            maxPooling.add(String.valueOf(maxInColumn));
-            averagePooling.add(String.valueOf(average/shotFeatureMatrix.getRowDimension()));
-        }
-        System.out.println("Result Pooling"+"\n");
-        System.out.println("MAX Pooling"+"\n");
-        for (int t=0; t <maxPooling.size() ;t ++)
-        {
-           System.out.println(maxPooling.get(t)+" ");
-        }
-        
-         System.out.println("AVG Pooling"+"\n");
-        for (int t=0; t <averagePooling.size() ;t ++)
-        {
-           System.out.println(maxPooling.get(t)+" ");
-        }
-    }
-     
-      public void writeToFile(String nameFullPathFile, ArrayList<String> contentToSave) throws IOException {
+    } 
+    /**
+     * 
+     * @param nameFullPathFile
+     * @param contentToSave
+     * @throws IOException 
+     */
+    public void writeToFile(String nameFullPathFile, ArrayList<String> contentToSave) throws IOException {
                 File file = new File(nameFullPathFile);
                 StringBuilder builder = new StringBuilder();
                 try(FileWriter writer = new FileWriter(file.getAbsoluteFile(), true)) {
@@ -376,5 +333,5 @@ public class Utility {
                         builder.append(contentToSave.get(i)).append(" ");
                         writer.append(builder).toString().trim();
                 }
-      }
+    }
 }
