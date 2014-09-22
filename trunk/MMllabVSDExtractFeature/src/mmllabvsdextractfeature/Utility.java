@@ -94,11 +94,11 @@ public class Utility {
         Boolean result = false;
         ProcessBuilder pb = new ProcessBuilder(unTarScriptShFile, folderForUnTar, dirtoSave);
         Process process = pb.start();
-        BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-        String line = null;
-        while ((line = reader.readLine()) != null) {
-            System.out.println(line);
-        }
+//        BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+//        String line = null;
+//        while ((line = reader.readLine()) != null) {
+//         //   System.out.println(line);
+//        }
         return result;
 
     }
@@ -297,11 +297,11 @@ public class Utility {
         ArrayList<String> averagePooling = new ArrayList<>();
         for(int column=0; column<shotFeatureMatrix.numCols;column++)
         {
-            int maxInColumn = 0;
+            int maxInColumn = Integer.MIN_VALUE;
             int average = 0;
             for (int rows =0; rows <shotFeatureMatrix.numRows;rows++) 
             {
-                if (shotFeatureMatrix.get(rows, column)> maxInColumn)
+                if (shotFeatureMatrix.unsafe_get(rows, column)> maxInColumn)
                     maxInColumn=(int) shotFeatureMatrix.unsafe_get(rows, column);
                 
                 average =(int) (average +shotFeatureMatrix.unsafe_get(rows, column));
