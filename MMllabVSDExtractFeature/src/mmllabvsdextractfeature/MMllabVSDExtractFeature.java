@@ -47,7 +47,7 @@ public class MMllabVSDExtractFeature {
         // TODO code application logic here
         MMllabVSDExtractFeature hello = new MMllabVSDExtractFeature();
         FileStructer metdata = new FileStructer();
-        Utility utilityClassIni = new Utility();
+        //Utility utilityClassIni = new Utility();
         FrameStructer frameStructer = new FrameStructer();
 
         /*
@@ -124,7 +124,7 @@ public class MMllabVSDExtractFeature {
 
                     for (int frameCount=0;frameCount<nameAllFrameOneShot.size();frameCount++)
                     {  // Delete feature extract file
-                       System.out.println("Delete file feature");
+                       //System.out.println("Delete file feature");
                        utilityClass.deletefile(DELETEFILE, nameAllFrameOneShot.get(frameCount));
                     }
                     // Release one shot data

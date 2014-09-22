@@ -2,10 +2,10 @@
 # Log starting time /media/Hdhesu2/DataVulq
 date
 
-echo $1
-echo $2
-echo $3
-echo $4
+#echo $1
+#echo $2
+#echo $3
+#echo $4
 # $1: GPU Device;
 # $2: GPU Cuda path in overfeat folder;
 # $3: Image for extract feature;
