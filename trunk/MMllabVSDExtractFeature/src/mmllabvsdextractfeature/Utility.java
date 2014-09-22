@@ -9,9 +9,8 @@ import Jama.Matrix;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -51,6 +50,16 @@ public class Utility {
         }
 
         return arrLis.toArray(new String[0]);
+    }
+      
+      public ArrayList<String> SplitUsingTokenizerWithLineArrayList(String subject, String delimiters) {
+       String[] lines = subject.split("\n");
+        StringTokenizer strTkn = new StringTokenizer(lines[1], delimiters);
+        ArrayList<String> arrLis = new ArrayList<String>(subject.length());
+        while (strTkn.hasMoreTokens()) {
+            arrLis.add(strTkn.nextToken());
+        }
+        return arrLis;
     }
     
     
@@ -298,7 +307,7 @@ public class Utility {
 
     }
      
-    public void savePoolingFeatureOneShotWithEJMLFromMatrix( DenseMatrix64F shotFeatureMatrix, String pathToSave, String nameShotInFilm) {
+    public void savePoolingFeatureOneShotWithEJMLFromMatrix( DenseMatrix64F shotFeatureMatrix, String pathToSave, String nameShotInFilm) throws IOException {
         // Make 
         ArrayList<String> maxPooling = new ArrayList<>();
         ArrayList<String> averagePooling = new ArrayList<>();
@@ -316,18 +325,15 @@ public class Utility {
             maxPooling.add(String.valueOf(maxInColumn));
             averagePooling.add(String.valueOf(average/shotFeatureMatrix.numRows));
         }
+        // Save to File
+        
         System.out.println("Result Pooling"+"\n");
         System.out.println("MAX Pooling"+"\n");
-        for (int t=0; t <maxPooling.size() ;t ++)
-        {
-           System.out.println(maxPooling.get(t)+" ");
-        }
+        String nameMax = pathToSave+"/"+nameShotInFilm+""+".MAXPooling." +".txt";
+        writeToFile(nameMax, maxPooling);
         
-         System.out.println("AVG Pooling"+"\n");
-        for (int t=0; t <averagePooling.size() ;t ++)
-        {
-           System.out.println(maxPooling.get(t)+" ");
-        }
+        String nameAVR = pathToSave+"/"+nameShotInFilm+".AVRPooling." + ".txt";
+        writeToFile(nameAVR, averagePooling);
     }
     
       public void savePoolingFeatureOneShotWithFromMatrix( Matrix shotFeatureMatrix, String pathToSave, String nameShotInFilm) {
@@ -361,17 +367,14 @@ public class Utility {
            System.out.println(maxPooling.get(t)+" ");
         }
     }
-    
-    public void buidPoolOneShot (ArrayList<String> nameAllFileFeatureOneShot) throws IOException{
-        
-        if(!nameAllFileFeatureOneShot.isEmpty()){
-        int row = nameAllFileFeatureOneShot.size();
-        for (int i=0;i<nameAllFileFeatureOneShot.size(); i++)
-        {   
-            ArrayList <Float> contentFeatureFile = splitStringToGetFloadValueUsingTokenizer(readTextFile(nameAllFileFeatureOneShot.get(i))," ");
-        }
-        }
-
-    }
-
+     
+      public void writeToFile(String nameFullPathFile, ArrayList<String> contentToSave) throws IOException {
+                File file = new File(nameFullPathFile);
+                StringBuilder builder = new StringBuilder();
+                try(FileWriter writer = new FileWriter(file.getAbsoluteFile(), true)) {
+                    for(int i=0; i< contentToSave.size();i++)
+                        builder.append(contentToSave.get(i)).append(" ");
+                        writer.append(builder).toString().trim();
+                }
+      }
 }

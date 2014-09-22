@@ -65,5 +65,8 @@ public class FrameStructer {
         public String toFullName() {
         return folder + "." + shotID + "." + filmID +"."+frameID;
     }
+        public String shotName() {
+        return folder + "." + shotID;
+    }
     
 }
